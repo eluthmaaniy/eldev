@@ -29,20 +29,26 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Alex Morgan — Shopify Expert & Store Developer" },
+      { title: "Lovable App" },
       {
         name: "description",
         content:
           "Shopify expert helping brands launch high-converting stores. Theme customization, store setup, speed optimization, and migrations.",
       },
       { name: "author", content: "Alex Morgan" },
-      { property: "og:title", content: "Alex Morgan — Shopify Expert" },
+      { property: "og:title", content: "Lovable App" },
       {
         property: "og:description",
         content: "Shopify expert helping brands launch high-converting stores.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Lovable App" },
+      { name: "description", content: "Shopify Success Suite creates a professional online portfolio showcasing your Shopify expertise." },
+      { property: "og:description", content: "Shopify Success Suite creates a professional online portfolio showcasing your Shopify expertise." },
+      { name: "twitter:description", content: "Shopify Success Suite creates a professional online portfolio showcasing your Shopify expertise." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ac98a6ba-7ed8-48e8-83c4-116751450ce6/id-preview-de2587f5--84994cc3-ddb2-4f00-95af-008243186cec.lovable.app-1776671924459.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ac98a6ba-7ed8-48e8-83c4-116751450ce6/id-preview-de2587f5--84994cc3-ddb2-4f00-95af-008243186cec.lovable.app-1776671924459.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
