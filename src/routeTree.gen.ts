@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as FullReviewsRouteImport } from './routes/full-reviews'
@@ -17,11 +16,6 @@ import { Route as FullPortfolioRouteImport } from './routes/full-portfolio'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 
-const SkillsRoute = SkillsRouteImport.update({
-  id: '/skills',
-  path: '/skills',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -60,7 +54,6 @@ export interface FileRoutesByFullPath {
   '/full-reviews': typeof FullReviewsRoute
   '/portfolio': typeof PortfolioRoute
   '/reviews': typeof ReviewsRoute
-  '/skills': typeof SkillsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,7 +62,6 @@ export interface FileRoutesByTo {
   '/full-reviews': typeof FullReviewsRoute
   '/portfolio': typeof PortfolioRoute
   '/reviews': typeof ReviewsRoute
-  '/skills': typeof SkillsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,7 +71,6 @@ export interface FileRoutesById {
   '/full-reviews': typeof FullReviewsRoute
   '/portfolio': typeof PortfolioRoute
   '/reviews': typeof ReviewsRoute
-  '/skills': typeof SkillsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -90,7 +81,6 @@ export interface FileRouteTypes {
     | '/full-reviews'
     | '/portfolio'
     | '/reviews'
-    | '/skills'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -99,7 +89,6 @@ export interface FileRouteTypes {
     | '/full-reviews'
     | '/portfolio'
     | '/reviews'
-    | '/skills'
   id:
     | '__root__'
     | '/'
@@ -108,7 +97,6 @@ export interface FileRouteTypes {
     | '/full-reviews'
     | '/portfolio'
     | '/reviews'
-    | '/skills'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -118,18 +106,10 @@ export interface RootRouteChildren {
   FullReviewsRoute: typeof FullReviewsRoute
   PortfolioRoute: typeof PortfolioRoute
   ReviewsRoute: typeof ReviewsRoute
-  SkillsRoute: typeof SkillsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/skills': {
-      id: '/skills'
-      path: '/skills'
-      fullPath: '/skills'
-      preLoaderRoute: typeof SkillsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -182,7 +162,6 @@ const rootRouteChildren: RootRouteChildren = {
   FullReviewsRoute: FullReviewsRoute,
   PortfolioRoute: PortfolioRoute,
   ReviewsRoute: ReviewsRoute,
-  SkillsRoute: SkillsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

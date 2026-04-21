@@ -1,134 +1,192 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import avatar from "@/assets/eldev-avatar.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Eldev Digital — Shopify Expert & Web Developer" },
+      { title: "Uthman Eldev (Digital) — Shopify Expert" },
       {
         name: "description",
         content:
-          "I'm Eldev Digital, a Nigerian Shopify Partner and web developer. I bring your Shopify ideas to life with custom store design, redesign, and dropshipping setup.",
+          "Uthman Eldev, aka Eldev Digital — a Shopify Partner expert helping store owners design, redesign, and scale profitable Shopify stores.",
       },
-      { property: "og:title", content: "Eldev Digital — Shopify Expert" },
+      { property: "og:title", content: "Uthman Eldev (Digital) — Shopify Expert" },
       {
         property: "og:description",
-        content: "I bring your Shopify ideas to life. Store design, redesign, dropshipping setup, and more.",
+        content: "Shopify Partner expert. I'll bring your ideas to life.",
       },
     ],
   }),
   component: AboutPage,
 });
 
-const stats = [
-  { value: "50+", label: "Projects" },
-  { value: "3+", label: "Years" },
-  { value: "100%", label: "Satisfaction" },
+const WHATSAPP_URL =
+  "https://wa.me/2349026799223?text=" +
+  encodeURIComponent("Hello, Eldev, I'm from your portfolio site");
+
+const allSkills = [
+  "Shopify Developer",
+  "Shopify Store Designer",
+  "Shopify Product Listing Expert",
+  "Shopify Dropshipping Expert",
+  "Shopify Marketing Expert",
+  "Dropshipping Store Expert",
+  "Product Researcher",
+  "Etsy Expert",
+  "Etsy Listing Expert",
+  "Google Ad Manager",
+  "Google Merchant Expert",
+  "Facebook Shop Expert",
+  "Facebook Ads Expert",
+  "TikTok Ads Manager",
+  "Instagram Ads Manager",
+  "Social Media Marketer",
+  "Email Marketer",
+];
+
+const education = [
+  {
+    icon: "ri-school-line",
+    school: "University of Abuja",
+    course: "B.A. English",
+    grad: "Graduated 2025",
+  },
 ];
 
 const certifications = [
-  { title: "Shopify Website & Development", org: "Udemy", year: "2019" },
-  { title: "Facebook Marketing & Advertising", org: "SkillUp", year: "2024" },
+  {
+    title: "Shopify Website & Development",
+    org: "Udemy",
+    year: "2019",
+  },
+  {
+    title: "Facebook Marketing & Advertising",
+    org: "SkillUp",
+    year: "2024",
+  },
 ];
 
+const SHORT_BIO =
+  "Hi, I'm Uthman Eldev, aka Eldev Digital, a Shopify Partner expert with years of experience helping store owners achieve massive success. Whether you need a store redesign, or want to turn your Shopify store into a profitable asset, I'm here to help!";
+
+const FULL_BIO_REST = `Why am I different?
+
+When you work with me, you're not just getting a service, you're getting someone who is invested in your growth. I'd work on strategies that reflect your store's unique essence, bringing in more visitors, more conversions, and more profits. Your success is my priority!
+
+Contact Me now to get started.`;
+
+const SKILLS_PREVIEW_COUNT = 5;
+
 function AboutPage() {
+  const [bioOpen, setBioOpen] = useState(false);
+  const [skillsOpen, setSkillsOpen] = useState(false);
+  const visibleSkills = skillsOpen ? allSkills : allSkills.slice(0, SKILLS_PREVIEW_COUNT);
+  const hiddenCount = allSkills.length - SKILLS_PREVIEW_COUNT;
+
   return (
     <Layout>
-      <section className="mx-auto max-w-2xl px-6 pt-10 sm:pt-14">
-        {/* Hero */}
-        <div className="flex flex-col items-center text-center animate-fade-in-up">
-          <div className="relative">
-            <img
-              src={avatar}
-              alt="Eldev Digital"
-              width={144}
-              height={144}
-              className="h-36 w-36 rounded-full object-cover shadow-soft ring-4 ring-white"
-            />
-            <span className="absolute bottom-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-soft">
-              <span className="h-3 w-3 rounded-full bg-[#1DBF73]" />
-            </span>
-          </div>
-
-          <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#1DBF73]/10 px-3 py-1 text-xs font-medium text-[#1DBF73]">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DBF73] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DBF73]" />
-            </span>
-            Available for work
-          </div>
-
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Eldev Digital
-          </h1>
-          <p className="mt-2 max-w-md text-balance text-base text-muted-foreground">
-            I bring your Shopify ideas to life.
+      <section className="mx-auto max-w-2xl px-6 pt-6 sm:pt-8">
+        {/* About me */}
+        <div className="rounded-3xl border border-border bg-card p-6 shadow-card">
+          <h2 className="text-lg font-semibold tracking-tight text-foreground">About me</h2>
+          <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-foreground/80">
+            {SHORT_BIO}
+            {bioOpen && "\n\n" + FULL_BIO_REST}
           </p>
 
-          <div className="mt-3 flex items-center gap-3 text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
-              <i className="ri-map-pin-line text-base" /> Nigeria 🇳🇬
-            </span>
-            <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
-            <span className="inline-flex items-center gap-1.5">
-              <i className="ri-translate-2 text-base" /> English
-            </span>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setBioOpen((v) => !v)}
+              className="text-sm font-semibold text-[#1DBF73] hover:underline"
+            >
+              {bioOpen ? "Show less" : "Read more"}
+            </button>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-[#1DBF73] px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02]"
+            >
+              <i className="ri-whatsapp-line text-base" />
+              Contact Me
+            </a>
           </div>
         </div>
 
-        {/* Bio */}
-        <div className="mt-10 rounded-3xl bg-secondary p-6">
-          <p className="text-[15px] leading-relaxed text-foreground/80">
-            I'm a Shopify Partner and web developer with hands-on experience helping store owners
-            build, redesign, and scale their online presence. I built this site myself — because I
-            build everything myself.
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          {stats.map((s) => (
-            <div key={s.label} className="glass rounded-2xl p-4 text-center">
-              <div className="text-2xl font-semibold tracking-tight text-foreground">{s.value}</div>
-              <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Skills */}
+        <section className="mt-10">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Skills</h2>
+          <div className="mt-4 flex flex-wrap items-center gap-2.5">
+            {visibleSkills.map((s) => (
+              <span
+                key={s}
+                className="rounded-full bg-secondary px-4 py-2 text-sm font-medium text-foreground"
+              >
+                {s}
+              </span>
+            ))}
+            {!skillsOpen && hiddenCount > 0 && (
+              <button
+                type="button"
+                onClick={() => setSkillsOpen(true)}
+                className="rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent"
+              >
+                +{hiddenCount}
+              </button>
+            )}
+            {skillsOpen && (
+              <button
+                type="button"
+                onClick={() => setSkillsOpen(false)}
+                className="rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent"
+              >
+                Show less
+              </button>
+            )}
+          </div>
+        </section>
 
         {/* Education */}
-        <section className="mt-12">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            Education
-          </h2>
+        <section className="mt-10">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Education</h2>
           <div className="mt-4 rounded-2xl border border-border bg-card p-5 shadow-card">
-            <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary">
-                <i className="ri-graduation-cap-line text-xl text-foreground/70" />
+            {education.map((e) => (
+              <div key={e.school} className="flex items-start gap-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary">
+                  <i className={`${e.icon} text-xl text-foreground/70`} />
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 text-foreground">
+                    <i className="ri-building-line text-base text-muted-foreground" />
+                    <span className="font-semibold">{e.school}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <i className="ri-book-open-line text-base" />
+                    <span>{e.course}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <i className="ri-graduation-cap-line text-base" />
+                    <span>{e.grad}</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="font-semibold text-foreground">University of Abuja</div>
-                <div className="mt-0.5 text-sm text-muted-foreground">B.A. English · Graduated 2025</div>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
         {/* Certifications */}
         <section className="mt-10">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            Certifications
-          </h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Certifications</h2>
           <div className="mt-4 space-y-3">
             {certifications.map((c) => (
               <div
                 key={c.title}
                 className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 shadow-card"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1DBF73]/10">
-                  <i className="ri-medal-line text-xl text-[#1DBF73]" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#B8860B]/10">
+                  <i className="ri-medal-line text-xl text-[#B8860B]" />
                 </div>
                 <div>
                   <div className="font-semibold text-foreground">{c.title}</div>
@@ -141,16 +199,52 @@ function AboutPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <div className="mt-12 mb-4 flex justify-center">
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center gap-2 rounded-full bg-[#1DBF73] px-7 py-3.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02]"
+        {/* Contact CTA */}
+        <section className="mt-10 mb-4 rounded-3xl border border-border bg-secondary p-6 text-center">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#222325] px-7 py-3.5 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-[#1DBF73]"
           >
-            View My Work <i className="ri-arrow-right-line text-base" />
-          </Link>
-        </div>
+            <i className="ri-whatsapp-line text-base" />
+            Contact Me
+          </a>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73]/10 px-3 py-1 text-xs font-medium text-[#1DBF73]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DBF73] opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DBF73]" />
+              </span>
+              <LiveOnline />
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-foreground/70 border border-border">
+              <i className="ri-time-line text-sm" /> Avg. response under 1 hour
+            </span>
+          </div>
+        </section>
       </section>
     </Layout>
   );
+}
+
+function LiveOnline() {
+  const [time, setTime] = useState<string>(() =>
+    new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })
+  );
+  useEffect(() => {
+    const id = setInterval(
+      () =>
+        setTime(
+          new Date().toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          })
+        ),
+      1000 * 30
+    );
+    return () => clearInterval(id);
+  }, []);
+  return <span>Online · {time}</span>;
 }

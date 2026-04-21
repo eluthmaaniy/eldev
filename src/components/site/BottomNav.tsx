@@ -3,7 +3,6 @@ import { Link, useLocation } from "@tanstack/react-router";
 const tabs = [
   { to: "/", label: "About", icon: "ri-user-3-line", iconActive: "ri-user-3-fill" },
   { to: "/portfolio", label: "Portfolio", icon: "ri-briefcase-line", iconActive: "ri-briefcase-fill" },
-  { to: "/skills", label: "Skills", icon: "ri-sparkling-line", iconActive: "ri-sparkling-fill" },
   { to: "/reviews", label: "Reviews", icon: "ri-star-line", iconActive: "ri-star-fill" },
   { to: "/contact", label: "Contact", icon: "ri-mail-line", iconActive: "ri-mail-fill" },
 ] as const;

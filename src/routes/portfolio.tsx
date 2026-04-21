@@ -92,7 +92,7 @@ function PortfolioPage() {
                 onClick={() => setFilter(c)}
                 className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   filter === c
-                    ? "bg-[#1DBF73] text-white"
+                    ? "bg-[#222325] text-white hover:bg-[#1DBF73]"
                     : "bg-secondary text-foreground/70 hover:bg-accent"
                 }`}
               >
