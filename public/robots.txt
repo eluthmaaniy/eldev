@@ -1,0 +1,9 @@
+# robots.txt for https://eldev.digital
+User-agent: *
+Allow: /
+
+# Block nothing — fully indexable
+Disallow:
+
+# Sitemap location
+Sitemap: https://eldev.digital/sitemap.xml

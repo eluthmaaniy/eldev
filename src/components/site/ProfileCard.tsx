@@ -69,6 +69,11 @@ export function ProfileCard() {
             />
           </h1>
 
+          {/* Site tagline */}
+          <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#1DBF73] sm:text-[13px]">
+            Top Rated Shopify Expert
+          </p>
+
           {/* 2. Tagline */}
           {/* 2. Mobile triple row: Rating · Tagline · Online ; Desktop: just tagline */}
           <div className="mt-2 flex w-full items-center justify-center gap-1.5 sm:hidden">

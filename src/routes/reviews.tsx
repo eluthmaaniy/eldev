@@ -21,6 +21,7 @@ export const Route = createFileRoute("/reviews")({
       { property: "og:title", content: "Reviews — Uthman Eldev (Digital)" },
       { property: "og:description", content: "239 verified reviews · 4.8★ average" },
     ],
+    links: [{ rel: "canonical", href: "https://eldev.digital/reviews" }],
   }),
   component: ReviewsPage,
 });

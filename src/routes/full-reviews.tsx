@@ -15,6 +15,7 @@ export const Route = createFileRoute("/full-reviews")({
       { property: "og:title", content: `All ${ratingSummary.total} Reviews — Uthman Eldev` },
       { property: "og:description", content: "Every verified review, in one place." },
     ],
+    links: [{ rel: "canonical", href: "https://eldev.digital/full-reviews" }],
   }),
   component: FullReviews,
 });
