@@ -87,37 +87,6 @@ function AutoCarousel({ images, interval = 3500 }: { images: string[]; interval?
   );
 }
 
-function ManualSnapCarousel({ projects: items }: { projects: typeof projects }) {
-  return (
-    <div className="-mx-6 overflow-x-auto no-scrollbar">
-      <div className="flex snap-x snap-mandatory gap-4 px-6">
-        {items.map((p) => (
-          <article
-            key={p.title}
-            className="group w-[260px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-card shadow-card sm:w-[300px]"
-          >
-            <div className="aspect-[4/3] overflow-hidden bg-secondary">
-              <img
-                src={p.img}
-                alt={p.title}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-4">
-              <span className="inline-block rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
-                {p.category}
-              </span>
-              <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
-              <p className="mt-1 text-xs text-muted-foreground">{p.desc}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function PortfolioPage() {
   const [filter, setFilter] = useState<Filter>("All");
   const filtered = filter === "All" ? projects.slice(0, 12) : projects.filter((p) => p.category === filter);
