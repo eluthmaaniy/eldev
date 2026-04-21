@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import coverImg from "@/assets/eldev-cover.png";
 import avatarImg from "@/assets/eldev-avatar.jpg";
+import shopifyPlusBadge from "@/assets/shopify-plus-partner.png";
 
 export function ProfileCard() {
   const [time, setTime] = useState<string>("");
@@ -22,58 +24,106 @@ export function ProfileCard() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-2xl px-4 pt-4 sm:px-6 sm:pt-6">
-      <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-card">
-        {/* Cover */}
-        <div className="relative h-36 w-full overflow-hidden bg-secondary sm:h-44">
-          <img
-            src={coverImg}
-            alt="Eldev Digital cover"
-            className="h-full w-full object-cover"
-            loading="eager"
-          />
-        </div>
-
-        {/* DP + Identity */}
-        <div className="relative px-5 pb-5 pt-0 sm:px-6">
-          <div className="-mt-12 flex items-end justify-between">
-            <div className="relative">
-              <img
-                src={avatarImg}
-                alt="Uthman Eldev"
-                width={96}
-                height={96}
-                className="h-24 w-24 rounded-full border-4 border-[#1DBF73] bg-white object-cover shadow-soft"
-              />
-              <span className="absolute bottom-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-soft">
-                <span className="h-3 w-3 rounded-full bg-[#1DBF73]" />
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-              Uthman Eldev <span className="text-muted-foreground font-normal">(Digital)</span>
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              I'll bring your ideas to life.
-            </p>
-
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73]/10 px-3 py-1 text-xs font-medium text-[#1DBF73]">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DBF73] opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DBF73]" />
-                </span>
-                <span suppressHydrationWarning>Online{time ? ` · ${time}` : ""}</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground/70">
-                <i className="ri-translate-2 text-sm" /> English
-              </span>
-            </div>
-          </div>
-        </div>
+    <header className="w-full">
+      {/* Cover — full width, edge to edge */}
+      <div className="relative h-40 w-full overflow-hidden bg-secondary sm:h-56">
+        <img
+          src={coverImg}
+          alt="Uthman Eldev cover"
+          className="h-full w-full object-cover"
+          loading="eager"
+        />
       </div>
-    </section>
+
+      {/* Centered identity block */}
+      <div className="mx-auto max-w-2xl px-5 sm:px-6">
+        <div className="-mt-14 flex flex-col items-center text-center sm:-mt-16">
+          <div className="relative">
+            <img
+              src={avatarImg}
+              alt="Uthman Eldev"
+              width={112}
+              height={112}
+              className="h-28 w-28 rounded-full border-4 border-[#1DBF73] bg-white object-cover shadow-soft"
+            />
+            <span className="absolute bottom-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-soft">
+              <span className="h-3 w-3 rounded-full bg-[#1DBF73]" />
+            </span>
+          </div>
+
+          <h1 className="mt-4 flex flex-wrap items-center justify-center gap-1.5 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+            <span>Uthman Eldev</span>
+            <span className="text-muted-foreground font-normal">(Digital)</span>
+            <i
+              className="ri-verified-badge-fill text-[20px] text-[#1DA1F2]"
+              aria-label="Verified"
+              title="Verified"
+            />
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            I'll bring your ideas to life.
+          </p>
+
+          {/* Rating */}
+          <div className="mt-3 flex items-center justify-center gap-1.5 text-sm">
+            <i className="ri-star-fill text-[#B8860B]" />
+            <span className="font-semibold text-foreground">4.7</span>
+            <Link
+              to="/reviews"
+              className="text-muted-foreground hover:text-[#1DBF73] hover:underline"
+            >
+              (239)
+            </Link>
+          </div>
+
+          {/* Shopify Plus Partner badge */}
+          <div className="mt-3">
+            <img
+              src={shopifyPlusBadge}
+              alt="Shopify Plus Partner"
+              className="h-8 w-auto sm:h-9"
+              loading="eager"
+            />
+          </div>
+
+          {/* Locations */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5">
+              <i className="ri-map-pin-2-fill text-[#1DBF73]" />
+              <span className="font-medium text-foreground">Abuja, Nigeria</span>
+              <span aria-hidden>🇳🇬</span>
+            </span>
+            <span className="hidden h-3 w-px bg-border sm:inline-block" />
+            <a
+              href="https://wa.me/447951525266"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-[#1DBF73]"
+            >
+              <i className="ri-map-pin-line" />
+              <span>UK · +44 7951 525266</span>
+              <span aria-hidden>🇬🇧</span>
+            </a>
+          </div>
+
+          {/* Online + language pills */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73]/10 px-3 py-1 text-xs font-medium text-[#1DBF73]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DBF73] opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DBF73]" />
+              </span>
+              <span suppressHydrationWarning>Online{time ? ` · ${time}` : ""}</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground/70">
+              <i className="ri-translate-2 text-sm" /> English
+            </span>
+          </div>
+        </div>
+
+        {/* divider below the card */}
+        <div className="mt-6 border-b border-border" />
+      </div>
+    </header>
   );
 }
