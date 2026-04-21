@@ -229,22 +229,24 @@ function AboutPage() {
 }
 
 function LiveOnline() {
-  const [time, setTime] = useState<string>(() =>
-    new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })
-  );
+  const [time, setTime] = useState<string>("");
   useEffect(() => {
+    const updateTime = () => {
+      setTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })
+      );
+    };
+
+    updateTime();
     const id = setInterval(
-      () =>
-        setTime(
-          new Date().toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-          })
-        ),
+      updateTime,
       1000 * 30
     );
     return () => clearInterval(id);
   }, []);
-  return <span>Online · {time}</span>;
+  return <span suppressHydrationWarning>Online{time ? ` · ${time}` : ""}</span>;
 }
