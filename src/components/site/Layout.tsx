@@ -1,13 +1,16 @@
 import type { ReactNode } from "react";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
+import { BottomNav } from "./BottomNav";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
+      <main className="flex-1 pb-nav">{children}</main>
+      <footer className="pb-nav">
+        <div className="mx-auto max-w-2xl px-6 pb-6 pt-4 text-center text-xs text-muted-foreground">
+          © 2026 Eldev Digital. All rights reserved.
+        </div>
+      </footer>
+      <BottomNav />
     </div>
   );
 }
