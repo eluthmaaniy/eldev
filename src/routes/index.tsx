@@ -27,28 +27,28 @@ const WHATSAPP_URL =
 
 // Skills — Shopify / e-commerce only. No Etsy, no headless commerce,
 // no tautologies (each skill appears once and reads distinctly).
-const SKILLS_GRID = [
-  "Shopify Store Setup",
-  "Shopify Store Redesign",
-  "Theme Customization",
-  "Store Migration",
-  "Product & Collection Setup",
-  "Store Settings Configuration",
-  "POS Setup & Migration",
-  "Website Audit & Optimization",
-  "Ongoing Store Management",
-  "Checkout Upgrade",
-  "Conversion Rate Optimization",
-  "Site Performance & Speed",
-  "Shopify SEO",
-  "Dropshipping Setup",
-  "Product Research",
-  "Product Listing Optimization",
-  "Klaviyo Email Flows",
-  "Email Marketing",
-  "Facebook & Instagram Ads",
-  "TikTok Ads",
-  "Google Ads & Merchant Center",
+const SKILLS_GRID: { name: string; icon: string }[] = [
+  { name: "Shopify Store Setup", icon: "ri-store-2-line" },
+  { name: "Shopify Store Redesign", icon: "ri-palette-line" },
+  { name: "Theme Customization", icon: "ri-brush-line" },
+  { name: "Store Migration", icon: "ri-exchange-line" },
+  { name: "Product & Collection Setup", icon: "ri-stack-line" },
+  { name: "Store Settings Configuration", icon: "ri-settings-3-line" },
+  { name: "POS Setup & Migration", icon: "ri-computer-line" },
+  { name: "Website Audit & Optimization", icon: "ri-search-eye-line" },
+  { name: "Ongoing Store Management", icon: "ri-tools-line" },
+  { name: "Checkout Upgrade", icon: "ri-shopping-cart-2-line" },
+  { name: "Conversion Rate Optimization", icon: "ri-line-chart-line" },
+  { name: "Site Performance & Speed", icon: "ri-flashlight-line" },
+  { name: "Shopify SEO", icon: "ri-search-line" },
+  { name: "Dropshipping Setup", icon: "ri-truck-line" },
+  { name: "Product Research", icon: "ri-bar-chart-box-line" },
+  { name: "Product Listing Optimization", icon: "ri-price-tag-3-line" },
+  { name: "Klaviyo Email Flows", icon: "ri-mail-send-line" },
+  { name: "Email Marketing", icon: "ri-mail-star-line" },
+  { name: "Facebook & Instagram Ads", icon: "ri-facebook-circle-line" },
+  { name: "TikTok Ads", icon: "ri-tiktok-line" },
+  { name: "Google Ads & Merchant Center", icon: "ri-google-line" },
 ];
 
 const education = [
@@ -124,14 +124,17 @@ function AboutPage() {
         {/* Skills */}
         <section className="mt-10">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Skills</h2>
-          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
             {visibleSkills.map((s) => (
-              <span
-                key={s}
-                className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-center text-xs font-medium text-foreground sm:text-sm"
+              <div
+                key={s.name}
+                className="skill-card flex items-center gap-2.5 px-4 py-3.5"
               >
-                {s}
-              </span>
+                <i className={`${s.icon} shrink-0 text-[22px] text-[#1DBF73]`} aria-hidden />
+                <span className="text-[13.5px] font-medium leading-tight text-foreground">
+                  {s.name}
+                </span>
+              </div>
             ))}
           </div>
           <div className="mt-3 flex justify-center">
