@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
+import coverImg from "@/assets/eldev-cover.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Uthman Eldev (Digital) — Shopify Expert" },
+      { title: "Uthman Eldev (Digital) — Top Rated Shopify Expert & Partner" },
       {
         name: "description",
         content:
-          "Uthman Eldev, aka Eldev Digital — a Shopify Partner expert helping store owners design, redesign, and scale profitable Shopify stores.",
+          "Top Rated Shopify Expert & verified Shopify Partner. Hire Uthman Eldev (Eldev Digital) for Shopify store design, redesign, theme customization, dropshipping setup, Shopify SEO, and Klaviyo email flows. 4.8★ across 239 reviews.",
       },
-      { property: "og:title", content: "Uthman Eldev (Digital) — Shopify Expert" },
+      { property: "og:title", content: "Uthman Eldev (Digital) — Top Rated Shopify Expert" },
       {
         property: "og:description",
-        content: "Shopify Partner expert. I'll bring your ideas to life.",
+        content: "Top Rated Shopify Expert & Partner — store design, redesign, dropshipping, Shopify SEO, Klaviyo. 4.8★ · 239 reviews.",
       },
+      { property: "og:image", content: coverImg },
+      { name: "twitter:image", content: coverImg },
     ],
+    links: [{ rel: "canonical", href: "https://eldev.digital/" }],
   }),
   component: AboutPage,
 });

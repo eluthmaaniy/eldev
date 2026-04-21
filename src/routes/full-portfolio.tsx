@@ -16,6 +16,7 @@ export const Route = createFileRoute("/full-portfolio")({
       { property: "og:image", content: projects[0]?.img },
       { name: "twitter:image", content: projects[0]?.img },
     ],
+    links: [{ rel: "canonical", href: "https://eldev.digital/full-portfolio" }],
   }),
   component: FullPortfolio,
 });

@@ -14,6 +14,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact — Uthman Eldev (Digital)" },
       { property: "og:description", content: "WhatsApp UK/NG or email contact@eldev.digital." },
     ],
+    links: [{ rel: "canonical", href: "https://eldev.digital/contact" }],
   }),
   component: ContactPage,
 });
