@@ -25,42 +25,22 @@ const WHATSAPP_URL =
   "https://wa.me/2349026799223?text=" +
   encodeURIComponent("Hello, Eldev, I'm from your portfolio site");
 
-const allSkills = [
-  "Shopify Developer",
-  "Shopify Store Designer",
-  "Shopify Product Listing Expert",
-  "Shopify Dropshipping Expert",
-  "Shopify Marketing Expert",
-  "Dropshipping Store Expert",
-  "Product Researcher",
-  "Etsy Expert",
-  "Etsy Listing Expert",
-  "Google Ad Manager",
-  "Google Merchant Expert",
-  "Facebook Shop Expert",
-  "Facebook Ads Expert",
-  "TikTok Ads Manager",
-  "Instagram Ads Manager",
-  "Social Media Marketer",
-  "Email Marketer",
-];
-
-// Skills shown as a grid (mobile + desktop) — blended with the existing list.
+// Skills — Shopify / e-commerce only. No Etsy, no headless commerce,
+// no tautologies (each skill appears once and reads distinctly).
 const SKILLS_GRID = [
   "Shopify Store Setup",
   "Shopify Store Redesign",
-  "Shopify Theme Customization",
+  "Theme Customization",
   "Store Migration",
   "Product & Collection Setup",
   "Store Settings Configuration",
   "POS Setup & Migration",
-  "Headless Commerce",
   "Website Audit & Optimization",
-  "Ongoing Website Management",
+  "Ongoing Store Management",
   "Checkout Upgrade",
   "Conversion Rate Optimization",
   "Site Performance & Speed",
-  "SEO for Shopify",
+  "Shopify SEO",
   "Dropshipping Setup",
   "Product Research",
   "Product Listing Optimization",
@@ -69,7 +49,6 @@ const SKILLS_GRID = [
   "Facebook & Instagram Ads",
   "TikTok Ads",
   "Google Ads & Merchant Center",
-  "Etsy Store & Listings",
 ];
 
 const education = [
@@ -108,9 +87,8 @@ const SKILLS_PREVIEW_COUNT = 8;
 function AboutPage() {
   const [bioOpen, setBioOpen] = useState(false);
   const [skillsOpen, setSkillsOpen] = useState(false);
-  const mergedSkills = Array.from(new Set([...SKILLS_GRID, ...allSkills]));
-  const visibleSkills = skillsOpen ? mergedSkills : mergedSkills.slice(0, SKILLS_PREVIEW_COUNT);
-  const hiddenCount = mergedSkills.length - SKILLS_PREVIEW_COUNT;
+  const visibleSkills = skillsOpen ? SKILLS_GRID : SKILLS_GRID.slice(0, SKILLS_PREVIEW_COUNT);
+  const hiddenCount = SKILLS_GRID.length - SKILLS_PREVIEW_COUNT;
 
   return (
     <Layout>
@@ -215,8 +193,8 @@ function AboutPage() {
                 key={c.title}
                 className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 shadow-card"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#B8860B]/10">
-                  <i className="ri-medal-line text-xl text-[#B8860B]" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#F5C452]/15">
+                  <i className="ri-medal-line text-xl text-[#F5C452]" />
                 </div>
                 <div>
                   <div className="font-semibold text-foreground">{c.title}</div>
