@@ -172,9 +172,43 @@ function ReviewsPage() {
           </p>
         </header>
 
-        {/* Featured reviews carousel */}
+        {/* Summary */}
+        <div className="mt-6 rounded-3xl border border-border bg-secondary p-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-5xl font-semibold tracking-tight text-foreground">
+                  {ratingSummary.average}
+                </span>
+                <Stars rating={5} />
+              </div>
+              <div className="mt-1 text-sm text-muted-foreground">
+                Based on {ratingSummary.total} verified reviews
+              </div>
+            </div>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73] px-3 py-1.5 text-xs font-semibold text-white">
+              <i className="ri-verified-badge-fill" /> Verified
+            </span>
+          </div>
+
+          <div className="mt-5 space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Overall rating summary
+            </p>
+            {([5, 4, 3, 2, 1] as const).map((s) => (
+              <RatingBar
+                key={s}
+                stars={s}
+                count={ratingSummary.breakdown[s]}
+                total={ratingSummary.total}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Featured reviews carousel — after summary */}
         {featured.length > 0 && (
-          <div className="mt-6">
+          <div className="mt-8">
             <div className="mb-3 flex items-center justify-between">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                 Featured reviews
@@ -218,40 +252,6 @@ function ReviewsPage() {
             </div>
           </div>
         )}
-
-        {/* Summary */}
-        <div className="mt-6 rounded-3xl border border-border bg-secondary p-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-5xl font-semibold tracking-tight text-foreground">
-                  {ratingSummary.average}
-                </span>
-                <Stars rating={5} />
-              </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                Based on {ratingSummary.total} verified reviews
-              </div>
-            </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73] px-3 py-1.5 text-xs font-semibold text-white">
-              <i className="ri-verified-badge-fill" /> Verified
-            </span>
-          </div>
-
-          <div className="mt-5 space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Overall rating summary
-            </p>
-            {([5, 4, 3, 2, 1] as const).map((s) => (
-              <RatingBar
-                key={s}
-                stars={s}
-                count={ratingSummary.breakdown[s]}
-                total={ratingSummary.total}
-              />
-            ))}
-          </div>
-        </div>
 
         {/* Cards */}
         <div className="mt-6 grid gap-4 sm:grid-cols-2">

@@ -87,75 +87,30 @@ function AutoCarousel({ images, interval = 3500 }: { images: string[]; interval?
   );
 }
 
-function ManualSnapCarousel({ projects: items }: { projects: typeof projects }) {
-  return (
-    <div className="-mx-6 overflow-x-auto no-scrollbar">
-      <div className="flex snap-x snap-mandatory gap-4 px-6">
-        {items.map((p) => (
-          <article
-            key={p.title}
-            className="group w-[260px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-card shadow-card sm:w-[300px]"
-          >
-            <div className="aspect-[4/3] overflow-hidden bg-secondary">
-              <img
-                src={p.img}
-                alt={p.title}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-4">
-              <span className="inline-block rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
-                {p.category}
-              </span>
-              <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
-              <p className="mt-1 text-xs text-muted-foreground">{p.desc}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function PortfolioPage() {
   const [filter, setFilter] = useState<Filter>("All");
   const filtered = filter === "All" ? projects.slice(0, 12) : projects.filter((p) => p.category === filter);
-  const recent = projects.slice(0, 8);
 
   return (
     <Layout>
       <section className="mx-auto max-w-2xl px-6 pt-6 sm:pt-8">
-        <header>
+        {/* Header — simple, breathing */}
+        <header className="text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Portfolio
           </h1>
-          <p className="mt-2 text-muted-foreground">
-            48+ Shopify stores I've designed, redesigned and shipped.
+          <p className="mt-2 text-sm text-muted-foreground">
+            48+ Shopify stores · designed, redesigned and shipped
           </p>
         </header>
 
-        {/* Featured auto-slider */}
+        {/* Featured auto-slider — single hero element */}
         <div className="mt-6">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-            Featured Showcase
-          </h2>
           <AutoCarousel images={featuredImages} />
         </div>
 
-        {/* Recent — manual snap carousel */}
-        <div className="mt-10">
-          <div className="mb-3 flex items-end justify-between">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Recent Projects
-            </h2>
-            <span className="text-xs text-muted-foreground">Swipe →</span>
-          </div>
-          <ManualSnapCarousel projects={recent} />
-        </div>
-
         {/* Filter pills */}
-        <div className="mt-10 -mx-6 overflow-x-auto no-scrollbar">
+        <div className="mt-8 -mx-6 overflow-x-auto no-scrollbar">
           <div className="flex gap-2 px-6">
             {filters.map((c) => (
               <button
@@ -173,37 +128,35 @@ function PortfolioPage() {
           </div>
         </div>
 
-        {/* Grid listing */}
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        {/* Minimal project list — image + title, less visual noise */}
+        <div className="mt-6 grid gap-5 sm:grid-cols-2">
           {filtered.map((p) => (
-            <article
-              key={p.title + p.img}
-              className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-transform hover:-translate-y-0.5"
-            >
-              <div className="aspect-[4/3] overflow-hidden bg-secondary">
+            <article key={p.title + p.img} className="group">
+              <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
                 <img
                   src={p.img}
                   alt={p.title}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </div>
-              <div className="p-4">
-                <span className="inline-block rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
+              <div className="mt-3 flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h3 className="truncate text-[15px] font-semibold text-foreground">{p.title}</h3>
+                  <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                    {p.client}
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
                   {p.category}
                 </span>
-                <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Ordered by <span className="font-medium text-foreground">{p.client}</span>
-                </p>
               </div>
             </article>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="mt-8 mb-4 flex justify-center">
+        <div className="mt-10 mb-4 flex justify-center">
           <Link
             to="/full-portfolio"
             className="inline-flex items-center gap-2 rounded-full bg-[#222325] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
