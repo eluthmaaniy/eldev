@@ -5,7 +5,7 @@ import { ProfileCard } from "./ProfileCard";
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <main className="flex-1 pb-nav">
+      <main className="flex-1 pb-nav pt-0">
         <ProfileCard />
         {children}
       </main>

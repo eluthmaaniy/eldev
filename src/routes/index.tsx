@@ -45,6 +45,33 @@ const allSkills = [
   "Email Marketer",
 ];
 
+// Skills shown as a grid (mobile + desktop) — blended with the existing list.
+const SKILLS_GRID = [
+  "Shopify Store Setup",
+  "Shopify Store Redesign",
+  "Shopify Theme Customization",
+  "Store Migration",
+  "Product & Collection Setup",
+  "Store Settings Configuration",
+  "POS Setup & Migration",
+  "Headless Commerce",
+  "Website Audit & Optimization",
+  "Ongoing Website Management",
+  "Checkout Upgrade",
+  "Conversion Rate Optimization",
+  "Site Performance & Speed",
+  "SEO for Shopify",
+  "Dropshipping Setup",
+  "Product Research",
+  "Product Listing Optimization",
+  "Klaviyo Email Flows",
+  "Email Marketing",
+  "Facebook & Instagram Ads",
+  "TikTok Ads",
+  "Google Ads & Merchant Center",
+  "Etsy Store & Listings",
+];
+
 const education = [
   {
     icon: "ri-school-line",
@@ -76,13 +103,14 @@ When you work with me, you're not just getting a service, you're getting someone
 
 Contact Me now to get started.`;
 
-const SKILLS_PREVIEW_COUNT = 5;
+const SKILLS_PREVIEW_COUNT = 8;
 
 function AboutPage() {
   const [bioOpen, setBioOpen] = useState(false);
   const [skillsOpen, setSkillsOpen] = useState(false);
-  const visibleSkills = skillsOpen ? allSkills : allSkills.slice(0, SKILLS_PREVIEW_COUNT);
-  const hiddenCount = allSkills.length - SKILLS_PREVIEW_COUNT;
+  const mergedSkills = Array.from(new Set([...SKILLS_GRID, ...allSkills]));
+  const visibleSkills = skillsOpen ? mergedSkills : mergedSkills.slice(0, SKILLS_PREVIEW_COUNT);
+  const hiddenCount = mergedSkills.length - SKILLS_PREVIEW_COUNT;
 
   return (
     <Layout>
@@ -118,29 +146,31 @@ function AboutPage() {
         {/* Skills */}
         <section className="mt-10">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Skills</h2>
-          <div className="mt-4 flex flex-wrap items-center gap-2.5">
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {visibleSkills.map((s) => (
               <span
                 key={s}
-                className="rounded-full bg-secondary px-4 py-2 text-sm font-medium text-foreground"
+                className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-center text-xs font-medium text-foreground sm:text-sm"
               >
                 {s}
               </span>
             ))}
+          </div>
+          <div className="mt-3 flex justify-center">
             {!skillsOpen && hiddenCount > 0 && (
               <button
                 type="button"
                 onClick={() => setSkillsOpen(true)}
-                className="rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent"
+                className="rounded-full bg-[#222325] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
               >
-                +{hiddenCount}
+                Show {hiddenCount} more
               </button>
             )}
             {skillsOpen && (
               <button
                 type="button"
                 onClick={() => setSkillsOpen(false)}
-                className="rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent"
+                className="rounded-full bg-[#222325] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
               >
                 Show less
               </button>
