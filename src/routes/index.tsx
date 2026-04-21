@@ -124,14 +124,13 @@ function AboutPage() {
         {/* Skills */}
         <section className="mt-10">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Skills</h2>
-          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {visibleSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-card flex items-center gap-2.5 px-4 py-3.5"
+                className="skill-card flex items-center justify-center px-2.5 py-2 text-center"
               >
-                <i className={`${s.icon} shrink-0 text-[22px] text-[#1DBF73]`} aria-hidden />
-                <span className="text-[13.5px] font-medium leading-tight text-foreground">
+                <span className="text-[12.5px] font-medium leading-tight text-foreground">
                   {s.name}
                 </span>
               </div>
