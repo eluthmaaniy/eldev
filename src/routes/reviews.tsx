@@ -60,7 +60,7 @@ function Stars() {
   return (
     <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <i key={i} className="ri-star-fill text-sm text-[#1DBF73]" />
+        <i key={i} className="ri-star-fill text-sm text-[#B8860B]" />
       ))}
     </div>
   );

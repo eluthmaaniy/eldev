@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
 
@@ -232,7 +232,7 @@ function LiveOnline() {
   const [time, setTime] = useState<string>(() =>
     new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })
   );
-  useState(() => {
+  useEffect(() => {
     const id = setInterval(
       () =>
         setTime(
@@ -245,6 +245,6 @@ function LiveOnline() {
       1000 * 30
     );
     return () => clearInterval(id);
-  });
+  }, []);
   return <span>Online · {time}</span>;
 }
