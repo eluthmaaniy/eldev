@@ -1,45 +1,35 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import fashionImg from "@/assets/project-fashion.jpg";
-import electronicsImg from "@/assets/project-electronics.jpg";
-import beautyImg from "@/assets/project-beauty.jpg";
+import { projects, allCategories, type ProjectCategory } from "@/data/portfolio-projects";
 
 export const Route = createFileRoute("/full-portfolio")({
   head: () => ({
     meta: [
-      { title: "Full Portfolio — Eldev Digital" },
+      { title: `Full Portfolio (${projects.length}+ Projects) — Uthman Eldev (Digital)` },
       {
         name: "description",
-        content:
-          "Browse all Shopify projects by Eldev Digital — store design, redesigns, dropshipping setups, and product listing work.",
+        content: `Browse all ${projects.length}+ Shopify projects by Uthman Eldev — store design, redesigns, dropshipping, and more.`,
       },
-      { property: "og:title", content: "Full Portfolio — Eldev Digital" },
-      { property: "og:description", content: "All Shopify projects by Eldev Digital." },
+      { property: "og:title", content: "Full Portfolio — Uthman Eldev (Digital)" },
+      { property: "og:description", content: `All ${projects.length}+ Shopify projects in one place.` },
+      { property: "og:image", content: projects[0]?.img },
+      { name: "twitter:image", content: projects[0]?.img },
     ],
   }),
   component: FullPortfolio,
 });
 
-const images = [fashionImg, electronicsImg, beautyImg];
-const categories = ["Store Design", "Store Redesign", "Dropshipping", "Product Listing"] as const;
-
-const all = Array.from({ length: 18 }).map((_, i) => ({
-  title: `Project ${String(i + 1).padStart(2, "0")}`,
-  desc:
-    [
-      "Custom Shopify storefront built from a Figma design.",
-      "Full Shopify rebuild — faster, cleaner, conversion-focused.",
-      "Dropshipping store fully set up with winning products.",
-      "Product catalog upload and SEO-optimized listings.",
-    ][i % 4],
-  category: categories[i % categories.length],
-  img: images[i % images.length],
-}));
+type Filter = "All" | ProjectCategory;
+const filters: Filter[] = ["All", ...allCategories];
 
 function FullPortfolio() {
+  const [filter, setFilter] = useState<Filter>("All");
+  const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+
   return (
     <Layout>
-      <section className="mx-auto max-w-3xl px-6 pt-10 sm:pt-14">
+      <section className="mx-auto max-w-3xl px-6 pt-6 sm:pt-8">
         <Link
           to="/portfolio"
           className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
@@ -47,14 +37,35 @@ function FullPortfolio() {
           <i className="ri-arrow-left-line" /> Back to Portfolio
         </Link>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          All Projects
+          Full Portfolio
         </h1>
-        <p className="mt-2 text-muted-foreground">Every Shopify project I've shipped, in one place.</p>
+        <p className="mt-2 text-muted-foreground">
+          All {projects.length} Shopify projects, in one place.
+        </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-4">
-          {all.map((p) => (
+        {/* Filter pills */}
+        <div className="mt-6 -mx-6 overflow-x-auto no-scrollbar">
+          <div className="flex gap-2 px-6">
+            {filters.map((c) => (
+              <button
+                key={c}
+                onClick={() => setFilter(c)}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  filter === c
+                    ? "bg-[#222325] text-white hover:bg-[#1DBF73]"
+                    : "bg-secondary text-foreground/70 hover:bg-accent"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-4">
+          {filtered.map((p) => (
             <article
-              key={p.title}
+              key={p.title + p.img}
               className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-transform hover:-translate-y-0.5"
             >
               <div className="aspect-[4/3] overflow-hidden bg-secondary">
@@ -62,8 +73,6 @@ function FullPortfolio() {
                   src={p.img}
                   alt={p.title}
                   loading="lazy"
-                  width={600}
-                  height={450}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
@@ -73,6 +82,9 @@ function FullPortfolio() {
                 </span>
                 <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Ordered by <span className="font-medium text-foreground">{p.client}</span>
+                </p>
               </div>
             </article>
           ))}

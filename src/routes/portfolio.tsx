@@ -1,92 +1,163 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import fashionImg from "@/assets/project-fashion.jpg";
-import electronicsImg from "@/assets/project-electronics.jpg";
-import beautyImg from "@/assets/project-beauty.jpg";
+import { projects, featuredImages, allCategories, type ProjectCategory } from "@/data/portfolio-projects";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Portfolio — Eldev Digital" },
+      { title: "Portfolio — Uthman Eldev (Digital)" },
       {
         name: "description",
         content:
-          "Selected Shopify projects by Eldev Digital — store design, redesign, dropshipping setup, and product listing optimization.",
+          "Browse Uthman Eldev's Shopify portfolio — 48+ stores across fashion, beauty, jewelry, watches, food, and more.",
       },
-      { property: "og:title", content: "Portfolio — Eldev Digital" },
-      { property: "og:description", content: "Selected Shopify projects by Eldev Digital." },
+      { property: "og:title", content: "Portfolio — Uthman Eldev (Digital)" },
+      { property: "og:description", content: "48+ Shopify projects across every niche." },
+      { property: "og:image", content: featuredImages[0] },
+      { name: "twitter:image", content: featuredImages[0] },
     ],
   }),
   component: PortfolioPage,
 });
 
-const categories = ["All", "Store Design", "Store Redesign", "Dropshipping", "Product Listing"] as const;
-type Category = (typeof categories)[number];
+type Filter = "All" | ProjectCategory;
+const filters: Filter[] = ["All", ...allCategories];
 
-const projects: { title: string; desc: string; category: Exclude<Category, "All">; img: string }[] = [
-  {
-    title: "Luxe Fashion Studio",
-    desc: "A premium DTC clothing storefront with custom lookbook and Klaviyo flows.",
-    category: "Store Design",
-    img: fashionImg,
-  },
-  {
-    title: "Volt Electronics",
-    desc: "Full Shopify rebuild — faster, cleaner, and conversion-focused.",
-    category: "Store Redesign",
-    img: electronicsImg,
-  },
-  {
-    title: "Sereline Beauty",
-    desc: "Soft, premium aesthetic with quiz-driven product discovery.",
-    category: "Store Design",
-    img: beautyImg,
-  },
-  {
-    title: "TrendDrop General",
-    desc: "Dropshipping store fully set up with winning products and apps.",
-    category: "Dropshipping",
-    img: fashionImg,
-  },
-  {
-    title: "GadgetVault",
-    desc: "Product catalog upload and SEO-optimized listings for 200+ items.",
-    category: "Product Listing",
-    img: electronicsImg,
-  },
-  {
-    title: "Bloom Skincare",
-    desc: "Refresh of an existing Shopify store with a new modern theme.",
-    category: "Store Redesign",
-    img: beautyImg,
-  },
-];
+function AutoCarousel({ images, interval = 3500 }: { images: string[]; interval?: number }) {
+  const [idx, setIdx] = useState(0);
+  const paused = useRef(false);
 
-const videoTestimonials = [
-  "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  "https://www.youtube.com/embed/9bZkp7q19f0",
-  "https://www.youtube.com/embed/3JZ_D3ELwOQ",
-];
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (!paused.current) setIdx((i) => (i + 1) % images.length);
+    }, interval);
+    return () => clearInterval(id);
+  }, [images.length, interval]);
+
+  return (
+    <div
+      className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-secondary shadow-card"
+      onMouseEnter={() => (paused.current = true)}
+      onMouseLeave={() => (paused.current = false)}
+    >
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`Featured Shopify project ${i + 1}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            i === idx ? "opacity-100" : "opacity-0"
+          }`}
+          loading={i === 0 ? "eager" : "lazy"}
+        />
+      ))}
+
+      <button
+        type="button"
+        aria-label="Previous"
+        onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)}
+        className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-foreground shadow-soft transition-colors hover:bg-white"
+      >
+        <i className="ri-arrow-left-s-line text-xl" />
+      </button>
+      <button
+        type="button"
+        aria-label="Next"
+        onClick={() => setIdx((i) => (i + 1) % images.length)}
+        className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-foreground shadow-soft transition-colors hover:bg-white"
+      >
+        <i className="ri-arrow-right-s-line text-xl" />
+      </button>
+
+      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIdx(i)}
+            className={`h-1.5 rounded-full transition-all ${
+              i === idx ? "w-6 bg-white" : "w-1.5 bg-white/60"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ManualSnapCarousel({ projects: items }: { projects: typeof projects }) {
+  return (
+    <div className="-mx-6 overflow-x-auto no-scrollbar">
+      <div className="flex snap-x snap-mandatory gap-4 px-6">
+        {items.map((p) => (
+          <article
+            key={p.title}
+            className="group w-[260px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-card shadow-card sm:w-[300px]"
+          >
+            <div className="aspect-[4/3] overflow-hidden bg-secondary">
+              <img
+                src={p.img}
+                alt={p.title}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-4">
+              <span className="inline-block rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
+                {p.category}
+              </span>
+              <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
+              <p className="mt-1 text-xs text-muted-foreground">{p.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function PortfolioPage() {
-  const [filter, setFilter] = useState<Category>("All");
-  const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+  const [filter, setFilter] = useState<Filter>("All");
+  const filtered = filter === "All" ? projects.slice(0, 12) : projects.filter((p) => p.category === filter);
+  const recent = projects.slice(0, 8);
 
   return (
     <Layout>
-      <section className="mx-auto max-w-2xl px-6 pt-10 sm:pt-14">
+      <section className="mx-auto max-w-2xl px-6 pt-6 sm:pt-8">
         <header>
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Portfolio
           </h1>
-          <p className="mt-2 text-muted-foreground">A few Shopify projects I've shipped.</p>
+          <p className="mt-2 text-muted-foreground">
+            48+ Shopify stores I've designed, redesigned and shipped.
+          </p>
         </header>
 
+        {/* Featured auto-slider */}
+        <div className="mt-6">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+            Featured Showcase
+          </h2>
+          <AutoCarousel images={featuredImages} />
+        </div>
+
+        {/* Recent — manual snap carousel */}
+        <div className="mt-10">
+          <div className="mb-3 flex items-end justify-between">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              Recent Projects
+            </h2>
+            <span className="text-xs text-muted-foreground">Swipe →</span>
+          </div>
+          <ManualSnapCarousel projects={recent} />
+        </div>
+
         {/* Filter pills */}
-        <div className="mt-6 -mx-6 overflow-x-auto no-scrollbar">
+        <div className="mt-10 -mx-6 overflow-x-auto no-scrollbar">
           <div className="flex gap-2 px-6">
-            {categories.map((c) => (
+            {filters.map((c) => (
               <button
                 key={c}
                 onClick={() => setFilter(c)}
@@ -102,11 +173,11 @@ function PortfolioPage() {
           </div>
         </div>
 
-        {/* Grid */}
+        {/* Grid listing */}
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {filtered.map((p) => (
             <article
-              key={p.title}
+              key={p.title + p.img}
               className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-transform hover:-translate-y-0.5"
             >
               <div className="aspect-[4/3] overflow-hidden bg-secondary">
@@ -114,8 +185,6 @@ function PortfolioPage() {
                   src={p.img}
                   alt={p.title}
                   loading="lazy"
-                  width={800}
-                  height={600}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
@@ -125,77 +194,23 @@ function PortfolioPage() {
                 </span>
                 <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
-                <a
-                  href="#"
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#1DBF73]"
-                >
-                  View Project <i className="ri-arrow-right-line" />
-                </a>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Ordered by <span className="font-medium text-foreground">{p.client}</span>
+                </p>
               </div>
             </article>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 mb-4 flex justify-center">
           <Link
             to="/full-portfolio"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-6 py-3 text-sm font-semibold text-foreground hover:bg-accent"
+            className="inline-flex items-center gap-2 rounded-full bg-[#222325] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
           >
-            View All Projects <i className="ri-arrow-right-line" />
+            View All {projects.length} Projects <i className="ri-arrow-right-line" />
           </Link>
         </div>
-
-        {/* Video testimonials */}
-        <section className="mt-14">
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">Video testimonials</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            A few clients sharing their experience.
-          </p>
-          <div className="mt-5 -mx-6 overflow-x-auto no-scrollbar sm:mx-0 sm:overflow-visible">
-            <div className="flex gap-4 px-6 sm:grid sm:grid-cols-3 sm:px-0">
-              {videoTestimonials.map((src, i) => (
-                <div
-                  key={src}
-                  className="aspect-[9/16] w-[220px] shrink-0 overflow-hidden rounded-2xl bg-black shadow-card sm:w-auto"
-                >
-                  <iframe
-                    src={src}
-                    title={`Client testimonial ${i + 1}`}
-                    className="h-full w-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Sales proof */}
-        <section className="mt-14 mb-4">
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">Sales proof</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Verified results from real client stores.
-          </p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            {["Q1 2025 Sales", "Q2 2025 Sales", "Q3 2025 Sales"].map((label) => (
-              <a
-                key={label}
-                href="#"
-                className="flex items-center justify-between rounded-2xl border border-border bg-card p-4 shadow-card transition-colors hover:bg-secondary"
-              >
-                <span className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1DBF73]/10">
-                    <i className="ri-google-drive-line text-lg text-[#1DBF73]" />
-                  </span>
-                  <span className="text-sm font-semibold text-foreground">{label}</span>
-                </span>
-                <i className="ri-arrow-right-up-line text-muted-foreground" />
-              </a>
-            ))}
-          </div>
-        </section>
       </section>
     </Layout>
   );
