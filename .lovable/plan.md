@@ -1,87 +1,66 @@
 
 
-# Profile, Skills, Reviews, About & Contact Polish
+# Profile Row Reorder + Modern Certifications Timeline
 
-## 1. Profile Card — Shopify Plus Partner placement + horizontal layout
+## 1. Profile card — mobile triple row reorder + tighter gaps
 
 **File:** `src/components/site/ProfileCard.tsx`
 
-- Move the **Shopify Plus Partner** badge out of its standalone row (currently floating alone between rating pills and location). Place it inline **next to the rating pill** on row 3, so the row becomes: `[Shopify Partner pill] [4.8 ★ (239) pill] [Shopify Plus badge image]` — matches the IT-Geeks reference layout where the Plus Partner badge sits beside the rating/identity area.
-- Combine the **Language** standalone row with the status row so nothing sits alone. Final row order:
-  1. Name + verified tick
-  2. Tagline
-  3. Shopify Partner pill · Rating pill · **Shopify Plus Partner badge** (inline)
-  4. Location · Phone (inline)
-  5. Online · NG time · UK time (scrollable pill row)
-  6. **English · Arabic** language pills (two pills inline, both using **`ri-global-line` globe icon** instead of translate icon)
+Currently the mobile row 2 reads: `[Online] [tagline] [4.8 ★]`. Swap the outer two so the rating sits left and the Online pill sits right:
 
-## 2. Skills — Apple-style subtle gray glass pills
+- New mobile order: `[4.8 ★ (239)] · [I'll bring your ideas to life.] · [Online]`
+- Reduce the row gap from `gap-2` to `gap-1.5` so items hug closer
+- Remove `flex-1` stretching where it widens the tagline excessively — keep the tagline centered with `flex-1` but cap horizontal padding
 
-**File:** `src/routes/index.tsx` + `src/styles.css`
+**Desktop status row (row 5):** the Online · NG · UK pills currently use `gap-2`. Tighten to `gap-1.5` so the three pills sit closer. Same tightening for the language row (English · Arabic).
 
-Replace the current `.skill-card` square grid with **rounded pill chips** matching the uploaded reference (light gray pill background, very subtle glass border, auto-fit flow):
+No other layout changes — just swap order and tighten gaps.
 
-- Container: `flex flex-wrap gap-2` (pills wrap naturally, not a rigid 2-col grid)
-- Each chip: rounded-full, `background: rgba(245,245,247,0.7)` with `1px solid rgba(0,0,0,0.06)`, soft inner highlight, `padding: 8px 16px`, `font-size: 13.5px`, `font-weight: 500`
-- Add new `.skill-chip` utility in `styles.css`
-
-## 3. About me — remove CTA line
+## 2. Certifications — vertical timeline (order-tracker style)
 
 **File:** `src/routes/index.tsx`
 
-Remove the line `"Contact Me now to get started."` from `FULL_BIO_REST` (the WhatsApp button below already serves that purpose).
+Replace the current 5 stacked card design with a single **vertical timeline** rail, like an order/shipment tracker:
 
-## 4. Certifications — add 3 more
+- One continuous vertical line on the left (1px, light gray, `#E5E7EB`)
+- A solid filled green dot (`#1DBF73`, ~12px) on the line at each certification "checkpoint"
+- Each row aligned to the right of the dot:
+  - **Bold title** (cert name)
+  - Subtle line below: `org · year`
+- Spacing between checkpoints: ~24px vertical
+- All dots filled green (all "completed" — like a delivered tracker)
+- Sort certifications **descending by year** (2024 first, 2019 last) so the newest is at the top
 
-**File:** `src/routes/index.tsx`
+Layout sketch:
 
-Add to the existing `certifications` array (keeping the current 2):
-- **Shopify Theme Development & Liquid** — Shopify Partner Academy · 2023
-- **Google Ads Search Certification** — Google Skillshop · 2024
-- **Klaviyo Email Marketing Certification** — Klaviyo Academy · 2024
+```text
+●───── Klaviyo Email Marketing Certification
+│      Klaviyo Academy · 2024
+│
+●───── Google Ads Search Certification
+│      Google Skillshop · 2024
+│
+●───── Facebook Marketing & Advertising
+│      SkillUp · 2024
+│
+●───── Shopify Theme Development & Liquid
+│      Shopify Partner Academy · 2023
+│
+●───── Shopify Website & Development
+       Udemy · 2019
+```
 
-## 5. Reviews — Featured auto-sliding carousel
+### Implementation
 
-**File:** `src/routes/reviews.tsx`
-
-Add a new **"Featured reviews"** carousel section above the existing grid:
-
-- Pick 5 highest-rated reviews (5★ + repeat client preferred) from `reviewsAll`
-- Horizontal CSS-scroll carousel with auto-advance every 4s using `setInterval` + `scrollTo({ behavior: "smooth" })`
-- Pause on hover/touch
-- Snap scrolling (`scroll-snap-type: x mandatory`) so manual swipes feel native
-- Dot indicators below
-- Each slide reuses the existing `ReviewCard` component (no new card style needed)
-- Section heading: "Featured reviews" with subtle "Auto-playing" label
-
-The existing review grid + summary block stays unchanged below the carousel.
-
-## 6. Contact page — minimal, breathable redesign
-
-**File:** `src/routes/contact.tsx`
-
-Replace the cluttered 4-card stack with a **two-zone Apple-style layout**:
-
-**Zone A — Hero contact card (single glass card, centered):**
-- Large avatar (reuse `eldev-avatar.jpg`, 64px)
-- "Uthman Eldev" + verified tick
-- Single "Average response under 1 hour" pill with pulsing green dot
-- One **primary "Chat on WhatsApp" button** (uses UK number, full-width on mobile)
-- One **secondary "Send email" outline button** below it
-
-**Zone B — Quiet channel list (3 minimal rows, no cards):**
-Below the hero, show the other channels as **simple inline rows with dividers** (no boxes, no buttons) — just icon + label + value, tap-to-open:
-- WhatsApp · Nigeria → `+234 902 679 9223`
-- Website → `eldev.digital`
-- Email → `contact@eldev.digital`
-
-Result: one strong CTA card + a quiet directory list. Removes the visual repetition of 4 nearly-identical cards.
+- Wrap list in a `relative` container with a `::before` pseudo-element OR an absolutely positioned `<span>` for the vertical line (left: `7px`, top: `8px`, bottom: `8px`, width: `2px`, `bg-border`)
+- Each item: `flex items-start gap-4 relative pl-0`
+- Dot: a 12px circle (`h-3 w-3 rounded-full bg-[#1DBF73] ring-4 ring-background`) — the ring on bg makes the dot "punch through" the rail cleanly
+- Text block to the right: title in `font-semibold text-foreground`, sub in `text-sm text-muted-foreground mt-0.5`
+- Sort in JS: `[...certifications].sort((a, b) => Number(b.year) - Number(a.year))`
 
 ## Technical notes
 
-- All edits CSS + TSX only. No new dependencies.
-- `.skill-chip` and featured-carousel styles added to `src/styles.css`.
-- The auto-scroll carousel uses native browser scroll APIs — no JS animation libs.
-- Arabic globe icon: `ri-global-line` (Remix) — already loaded site-wide.
-- Layout stays mobile-first; everything scales cleanly on desktop.
+- No new files, no new dependencies.
+- `ProfileCard.tsx` change is purely JSX reordering inside the existing `sm:hidden` row plus gap class swaps.
+- `index.tsx` certifications block is a clean replacement of the current cards section — no other sections touched.
 
