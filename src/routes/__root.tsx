@@ -29,25 +29,42 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Eldev Digital — Shopify Expert & Web Developer" },
+      { title: "Eldev Digital — Top Rated Shopify Expert & Web Developer" },
       {
         name: "description",
         content:
-          "I'm Eldev Digital — a Nigerian Shopify expert and web developer. I bring your Shopify ideas to life with custom store design, redesign, and dropshipping setup.",
+          "Top Rated Shopify Expert & Shopify Partner. Custom Shopify store design, redesign, theme customization, dropshipping setup, Shopify SEO, Klaviyo email flows, and conversion optimization. Hire Uthman Eldev (Digital) — verified 4.8★ across 239 reviews.",
       },
+      {
+        name: "keywords",
+        content:
+          "Shopify expert, top rated Shopify expert, Shopify developer, Shopify Partner, hire Shopify expert, Shopify store design, Shopify redesign, Shopify theme customization, Shopify Plus partner, Shopify SEO, Shopify dropshipping expert, dropshipping setup, Klaviyo email marketing, Shopify Liquid developer, ecommerce developer, Shopify expert Nigeria, Shopify expert UK, Shopify expert Abuja, Shopify freelancer, Eldev Digital, Uthman Eldev",
+      },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "googlebot", content: "index, follow" },
       { name: "author", content: "Eldev Digital" },
-      { property: "og:title", content: "Eldev Digital — Shopify Expert" },
+      { name: "theme-color", content: "#1DBF73" },
+      { property: "og:site_name", content: "Eldev Digital" },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:title", content: "Eldev Digital — Top Rated Shopify Expert" },
       {
         property: "og:description",
-        content: "I bring your Shopify ideas to life. Store design, redesign, dropshipping setup, and more.",
+        content: "Top Rated Shopify Expert & Partner — store design, redesign, dropshipping setup, Shopify SEO, and Klaviyo email flows. 4.8★ across 239 reviews.",
       },
+      { property: "og:url", content: "https://eldev.digital/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Eldev Digital — Top Rated Shopify Expert" },
+      {
+        name: "twitter:description",
+        content: "Top Rated Shopify Expert & Partner. 4.8★ across 239 verified reviews.",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/jpeg", href: "/favicon.jpg" },
       { rel: "apple-touch-icon", href: "/favicon.jpg" },
+      { rel: "canonical", href: "https://eldev.digital/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -57,6 +74,71 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: "https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Person",
+              "@id": "https://eldev.digital/#person",
+              name: "Uthman Eldev",
+              alternateName: ["Eldev Digital", "Uthman Eldev (Digital)"],
+              url: "https://eldev.digital/",
+              image: "https://eldev.digital/favicon.jpg",
+              jobTitle: "Top Rated Shopify Expert & Shopify Partner",
+              description:
+                "Top Rated Shopify Expert and verified Shopify Partner specializing in store design, redesign, dropshipping setup, Shopify SEO, and Klaviyo email marketing.",
+              email: "mailto:contact@eldev.digital",
+              telephone: "+44 7951 525266",
+              knowsLanguage: ["English", "Arabic"],
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Abuja",
+                addressCountry: "NG",
+              },
+              sameAs: ["https://eldev.digital/"],
+            },
+            {
+              "@type": "ProfessionalService",
+              "@id": "https://eldev.digital/#business",
+              name: "Eldev Digital",
+              url: "https://eldev.digital/",
+              image: "https://eldev.digital/favicon.jpg",
+              priceRange: "$$",
+              description:
+                "Top Rated Shopify Expert offering Shopify store design, redesign, theme customization, dropshipping setup, Shopify SEO, and Klaviyo email flows.",
+              areaServed: ["Worldwide"],
+              founder: { "@id": "https://eldev.digital/#person" },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.8",
+                reviewCount: "239",
+                bestRating: "5",
+                worstRating: "1",
+              },
+              makesOffer: [
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Shopify Store Design" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Shopify Store Redesign" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Shopify Theme Customization" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Shopify Dropshipping Setup" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Shopify SEO" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Klaviyo Email Marketing" } },
+              ],
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://eldev.digital/#website",
+              url: "https://eldev.digital/",
+              name: "Eldev Digital",
+              publisher: { "@id": "https://eldev.digital/#person" },
+              inLanguage: "en",
+            },
+          ],
+        }),
       },
     ],
   }),
