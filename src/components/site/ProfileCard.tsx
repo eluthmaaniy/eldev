@@ -70,15 +70,8 @@ export function ProfileCard() {
           </h1>
 
           {/* 2. Tagline */}
-          {/* 2. Mobile triple row: Online · Tagline · Rating ; Desktop: just tagline */}
-          <div className="mt-2 flex w-full items-center justify-between gap-2 sm:hidden">
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#1DBF73]/12 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
-              <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-[#1DBF73]" />
-              Online
-            </span>
-            <p className="flex-1 truncate text-center text-[13px] font-normal tracking-[-0.01em] text-muted-foreground">
-              I'll bring your ideas to life.
-            </p>
+          {/* 2. Mobile triple row: Rating · Tagline · Online ; Desktop: just tagline */}
+          <div className="mt-2 flex w-full items-center justify-between gap-1.5 sm:hidden">
             <Link
               to="/reviews"
               className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-white/80 px-2.5 py-1 text-[11px] font-medium text-foreground hover:text-[#1DBF73]"
@@ -87,6 +80,13 @@ export function ProfileCard() {
               <span>4.8</span>
               <span className="text-muted-foreground">(239)</span>
             </Link>
+            <p className="flex-1 truncate px-1 text-center text-[13px] font-normal tracking-[-0.01em] text-muted-foreground">
+              I'll bring your ideas to life.
+            </p>
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#1DBF73]/12 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
+              <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-[#1DBF73]" />
+              Online
+            </span>
           </div>
           <p className="mt-2 hidden text-[14px] font-normal tracking-[-0.01em] text-muted-foreground sm:block">
             I'll bring your ideas to life.
@@ -132,7 +132,7 @@ export function ProfileCard() {
           </div>
 
           {/* 5. Status row — NG + UK times (Online moved to row 2 on mobile) */}
-          <div className="no-scrollbar mt-3 flex w-full max-w-full items-center justify-center gap-2 overflow-x-auto whitespace-nowrap px-1">
+          <div className="no-scrollbar mt-3 flex w-full max-w-full items-center justify-center gap-1.5 overflow-x-auto whitespace-nowrap px-1">
             <span className="hidden shrink-0 items-center gap-1.5 rounded-full bg-[#1DBF73]/12 px-3 py-1.5 text-[12px] font-medium text-[#1DBF73] sm:inline-flex">
               <span className="pulse-dot inline-block h-2 w-2 rounded-full bg-[#1DBF73]" />
               Online
@@ -154,7 +154,7 @@ export function ProfileCard() {
           </div>
 
           {/* 6. Languages — English + Arabic */}
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
             <span className="glass-pill inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-foreground/70">
               <i className="ri-global-line text-[#1DBF73]" /> English
             </span>

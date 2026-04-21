@@ -197,23 +197,21 @@ function AboutPage() {
         {/* Certifications */}
         <section className="mt-10">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Certifications</h2>
-          <div className="mt-4 space-y-3">
-            {certifications.map((c) => (
-              <div
-                key={c.title}
-                className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 shadow-card"
-              >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#F5C452]/15">
-                  <i className="ri-medal-line text-xl text-[#F5C452]" />
-                </div>
-                <div>
-                  <div className="font-semibold text-foreground">{c.title}</div>
-                  <div className="mt-0.5 text-sm text-muted-foreground">
-                    {c.org} · {c.year}
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="relative mt-6 pl-6">
+            <span className="absolute left-[5px] top-2 bottom-2 w-px bg-border" aria-hidden="true" />
+            <ul className="space-y-6">
+              {[...certifications]
+                .sort((a, b) => Number(b.year) - Number(a.year))
+                .map((c) => (
+                  <li key={c.title} className="relative">
+                    <span className="absolute -left-[26px] top-1 h-3 w-3 rounded-full bg-[#1DBF73] ring-4 ring-background" aria-hidden="true" />
+                    <div className="font-semibold text-foreground">{c.title}</div>
+                    <div className="mt-0.5 text-sm text-muted-foreground">
+                      {c.org} · {c.year}
+                    </div>
+                  </li>
+                ))}
+            </ul>
           </div>
         </section>
 
