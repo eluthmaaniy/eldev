@@ -88,14 +88,10 @@ export function ProfileCard() {
               <span>4.8</span>
               <span className="text-muted-foreground">(239)</span>
             </Link>
-          </div>
-
-          {/* Shopify Plus Partner badge */}
-          <div className="mt-3">
             <img
               src={shopifyPlusBadge}
               alt="Shopify Plus Partner"
-              className="h-8 w-auto sm:h-9"
+              className="h-7 w-auto sm:h-8"
               loading="eager"
             />
           </div>
@@ -117,7 +113,7 @@ export function ProfileCard() {
             </a>
           </div>
 
-          {/* 5. Status row — Online + NG + UK */}
+          {/* 5. Status row — Online + NG + UK + Languages (all inline) */}
           <div className="no-scrollbar mt-3 flex w-full max-w-full items-center justify-center gap-2 overflow-x-auto whitespace-nowrap px-1">
             <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#1DBF73]/12 px-3 py-1.5 text-[12px] font-medium text-[#1DBF73]">
               <span className="pulse-dot inline-block h-2 w-2 rounded-full bg-[#1DBF73]" />
@@ -139,10 +135,13 @@ export function ProfileCard() {
             </span>
           </div>
 
-          {/* 6. Language pill */}
-          <div className="mt-3 flex justify-center">
+          {/* 6. Languages — English + Arabic */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <span className="glass-pill inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-foreground/70">
-              <i className="ri-translate-2" /> English
+              <i className="ri-global-line text-[#1DBF73]" /> English
+            </span>
+            <span className="glass-pill inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-foreground/70">
+              <i className="ri-global-line text-[#1DBF73]" /> Arabic
             </span>
           </div>
         </div>

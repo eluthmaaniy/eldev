@@ -71,6 +71,21 @@ const certifications = [
     org: "SkillUp",
     year: "2024",
   },
+  {
+    title: "Shopify Theme Development & Liquid",
+    org: "Shopify Partner Academy",
+    year: "2023",
+  },
+  {
+    title: "Google Ads Search Certification",
+    org: "Google Skillshop",
+    year: "2024",
+  },
+  {
+    title: "Klaviyo Email Marketing Certification",
+    org: "Klaviyo Academy",
+    year: "2024",
+  },
 ];
 
 const SHORT_BIO =
@@ -78,9 +93,7 @@ const SHORT_BIO =
 
 const FULL_BIO_REST = `Why am I different?
 
-When you work with me, you're not just getting a service, you're getting someone who is invested in your growth. I'd work on strategies that reflect your store's unique essence, bringing in more visitors, more conversions, and more profits. Your success is my priority!
-
-Contact Me now to get started.`;
+When you work with me, you're not just getting a service, you're getting someone who is invested in your growth. I'd work on strategies that reflect your store's unique essence, bringing in more visitors, more conversions, and more profits. Your success is my priority!`;
 
 const SKILLS_PREVIEW_COUNT = 8;
 
@@ -124,16 +137,11 @@ function AboutPage() {
         {/* Skills */}
         <section className="mt-10">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Skills</h2>
-          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <div className="mt-4 flex flex-wrap gap-2">
             {visibleSkills.map((s) => (
-              <div
-                key={s.name}
-                className="skill-card flex items-center justify-center px-2.5 py-2 text-center"
-              >
-                <span className="text-[12.5px] font-medium leading-tight text-foreground">
-                  {s.name}
-                </span>
-              </div>
+              <span key={s.name} className="skill-chip">
+                {s.name}
+              </span>
             ))}
           </div>
           <div className="mt-3 flex justify-center">

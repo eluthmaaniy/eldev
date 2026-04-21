@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
 import {
@@ -131,6 +131,34 @@ function RatingBar({ stars, count, total }: { stars: number; count: number; tota
 
 function ReviewsPage() {
   const preview = reviewsAll.slice(0, 8);
+  const featured = reviewsAll
+    .slice()
+    .sort((a, b) => Number(b.repeat ?? 0) - Number(a.repeat ?? 0) || b.rating - a.rating)
+    .filter((r) => r.rating === 5)
+    .slice(0, 5);
+
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused || featured.length === 0) return;
+    const id = setInterval(() => {
+      const el = carouselRef.current;
+      if (!el) return;
+      const next = (activeSlide + 1) % featured.length;
+      el.scrollTo({ left: el.clientWidth * next, behavior: "smooth" });
+      setActiveSlide(next);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [activeSlide, paused, featured.length]);
+
+  const onScroll = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const idx = Math.round(el.scrollLeft / el.clientWidth);
+    if (idx !== activeSlide) setActiveSlide(idx);
+  };
 
   return (
     <Layout>
@@ -143,6 +171,53 @@ function ReviewsPage() {
             What clients say about working with me.
           </p>
         </header>
+
+        {/* Featured reviews carousel */}
+        {featured.length > 0 && (
+          <div className="mt-6">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                Featured reviews
+              </h2>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+                <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-[#1DBF73]" />
+                Auto-playing
+              </span>
+            </div>
+            <div
+              ref={carouselRef}
+              onScroll={onScroll}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+              onTouchStart={() => setPaused(true)}
+              onTouchEnd={() => setPaused(false)}
+              className="featured-carousel no-scrollbar"
+            >
+              {featured.map((r, i) => (
+                <div key={r.name + i}>
+                  <ReviewCard r={r} />
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 flex justify-center gap-1.5">
+              {featured.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    const el = carouselRef.current;
+                    if (!el) return;
+                    el.scrollTo({ left: el.clientWidth * i, behavior: "smooth" });
+                    setActiveSlide(i);
+                  }}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${
+                    activeSlide === i ? "w-6 bg-[#1DBF73]" : "w-1.5 bg-border"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Summary */}
         <div className="mt-6 rounded-3xl border border-border bg-secondary p-6">
