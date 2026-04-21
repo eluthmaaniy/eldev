@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, TrendingUp } from "lucide-react";
 import { Layout } from "@/components/site/Layout";
 import fashionImg from "@/assets/project-fashion.jpg";
 import electronicsImg from "@/assets/project-electronics.jpg";
@@ -8,125 +8,194 @@ import beautyImg from "@/assets/project-beauty.jpg";
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Portfolio — Shopify Stores by Alex Morgan" },
+      { title: "Portfolio — Eldev Digital" },
       {
         name: "description",
         content:
-          "Featured Shopify projects: fashion, electronics, and beauty stores I've designed and built.",
+          "Selected Shopify projects by Eldev Digital — store design, redesign, dropshipping setup, and product listing optimization.",
       },
-      { property: "og:title", content: "Shopify Portfolio — Alex Morgan" },
-      { property: "og:description", content: "Featured Shopify stores I've launched and scaled." },
+      { property: "og:title", content: "Portfolio — Eldev Digital" },
+      { property: "og:description", content: "Selected Shopify projects by Eldev Digital." },
     ],
   }),
   component: PortfolioPage,
 });
 
-const projects = [
+const categories = ["All", "Store Design", "Store Redesign", "Dropshipping", "Product Listing"] as const;
+type Category = (typeof categories)[number];
+
+const projects: { title: string; desc: string; category: Exclude<Category, "All">; img: string }[] = [
   {
-    img: fashionImg,
     title: "Luxe Fashion Studio",
-    category: "Fashion & Apparel",
-    desc: "Premium DTC clothing brand. Built a custom theme with a curated lookbook, advanced filtering, and Klaviyo flows.",
-    results: ["+42% conversion rate", "3× returning customers", "1.8s LCP score"],
-    tags: ["Custom Theme", "Klaviyo", "Liquid"],
+    desc: "A premium DTC clothing storefront with custom lookbook and Klaviyo flows.",
+    category: "Store Design",
+    img: fashionImg,
   },
   {
-    img: electronicsImg,
     title: "Volt Electronics",
-    category: "Consumer Electronics",
-    desc: "Migrated from WooCommerce to Shopify Plus. Custom product configurator, B2B portal, and ReCharge subscriptions.",
-    results: ["$1.2M annual revenue", "6× faster checkout", "Zero downtime migration"],
-    tags: ["Shopify Plus", "Migration", "B2B"],
+    desc: "Full Shopify rebuild — faster, cleaner, and conversion-focused.",
+    category: "Store Redesign",
+    img: electronicsImg,
   },
   {
-    img: beautyImg,
     title: "Sereline Beauty",
-    category: "Beauty & Skincare",
-    desc: "Luxury skincare brand. Designed a soft, premium aesthetic with quiz-driven product discovery and loyalty.",
-    results: ["10× revenue in 12 months", "55% email-driven sales", "Featured in Vogue"],
-    tags: ["Brand Design", "Loyalty", "Quiz Funnel"],
+    desc: "Soft, premium aesthetic with quiz-driven product discovery.",
+    category: "Store Design",
+    img: beautyImg,
+  },
+  {
+    title: "TrendDrop General",
+    desc: "Dropshipping store fully set up with winning products and apps.",
+    category: "Dropshipping",
+    img: fashionImg,
+  },
+  {
+    title: "GadgetVault",
+    desc: "Product catalog upload and SEO-optimized listings for 200+ items.",
+    category: "Product Listing",
+    img: electronicsImg,
+  },
+  {
+    title: "Bloom Skincare",
+    desc: "Refresh of an existing Shopify store with a new modern theme.",
+    category: "Store Redesign",
+    img: beautyImg,
   },
 ];
 
+const videoTestimonials = [
+  "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "https://www.youtube.com/embed/9bZkp7q19f0",
+  "https://www.youtube.com/embed/3JZ_D3ELwOQ",
+];
+
 function PortfolioPage() {
+  const [filter, setFilter] = useState<Category>("All");
+  const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+
   return (
     <Layout>
-      <section className="bg-gradient-soft py-16 sm:py-24">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+      <section className="mx-auto max-w-2xl px-6 pt-10 sm:pt-14">
+        <header>
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Portfolio
-          </span>
-          <h1 className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Stores I've built. Results I've delivered.
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground">
-            A selection of my favorite Shopify projects across different industries.
-          </p>
-        </div>
-      </section>
+          <p className="mt-2 text-muted-foreground">A few Shopify projects I've shipped.</p>
+        </header>
 
-      <section className="bg-background py-20">
-        <div className="mx-auto max-w-7xl space-y-20 px-4 sm:px-6 lg:px-8">
-          {projects.map((p, i) => (
+        {/* Filter pills */}
+        <div className="mt-6 -mx-6 overflow-x-auto no-scrollbar">
+          <div className="flex gap-2 px-6">
+            {categories.map((c) => (
+              <button
+                key={c}
+                onClick={() => setFilter(c)}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  filter === c
+                    ? "bg-[#1DBF73] text-white"
+                    : "bg-secondary text-foreground/70 hover:bg-accent"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Grid */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          {filtered.map((p) => (
             <article
               key={p.title}
-              className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""}`}
+              className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-transform hover:-translate-y-0.5"
             >
-              <div className="relative">
-                <div className="absolute -inset-3 rounded-3xl bg-gradient-primary opacity-20 blur-2xl" />
+              <div className="aspect-[4/3] overflow-hidden bg-secondary">
                 <img
                   src={p.img}
                   alt={p.title}
                   loading="lazy"
-                  width={1280}
-                  height={896}
-                  className="relative rounded-3xl shadow-elegant"
+                  width={800}
+                  height={600}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-primary">{p.category}</div>
-                <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{p.title}</h2>
-                <p className="mt-4 text-muted-foreground">{p.desc}</p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <span key={t} className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                  {p.results.map((r) => (
-                    <div key={r} className="rounded-2xl border border-border bg-card p-4 shadow-card">
-                      <TrendingUp className="h-4 w-4 text-primary" />
-                      <div className="mt-2 text-sm font-semibold text-foreground">{r}</div>
-                    </div>
-                  ))}
-                </div>
+              <div className="p-4">
+                <span className="inline-block rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
+                  {p.category}
+                </span>
+                <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
+                <a
+                  href="#"
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#1DBF73]"
+                >
+                  View Project <i className="ri-arrow-right-line" />
+                </a>
               </div>
             </article>
           ))}
         </div>
-      </section>
 
-      <section className="bg-background pb-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-10 text-center shadow-elegant sm:p-16">
-            <h2 className="font-display text-3xl font-bold text-primary-foreground sm:text-4xl">
-              Want results like these?
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-primary-foreground/85">
-              Let's build your next Shopify store together.
-            </p>
-            <Link
-              to="/contact"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-7 py-3.5 text-sm font-semibold text-primary shadow-soft transition-transform hover:scale-105"
-            >
-              Start a project <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+        {/* CTA */}
+        <div className="mt-8 flex justify-center">
+          <Link
+            to="/full-portfolio"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-6 py-3 text-sm font-semibold text-foreground hover:bg-accent"
+          >
+            View All Projects <i className="ri-arrow-right-line" />
+          </Link>
         </div>
+
+        {/* Video testimonials */}
+        <section className="mt-14">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">Video testimonials</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            A few clients sharing their experience.
+          </p>
+          <div className="mt-5 -mx-6 overflow-x-auto no-scrollbar sm:mx-0 sm:overflow-visible">
+            <div className="flex gap-4 px-6 sm:grid sm:grid-cols-3 sm:px-0">
+              {videoTestimonials.map((src, i) => (
+                <div
+                  key={src}
+                  className="aspect-[9/16] w-[220px] shrink-0 overflow-hidden rounded-2xl bg-black shadow-card sm:w-auto"
+                >
+                  <iframe
+                    src={src}
+                    title={`Client testimonial ${i + 1}`}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Sales proof */}
+        <section className="mt-14 mb-4">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">Sales proof</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Verified results from real client stores.
+          </p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {["Q1 2025 Sales", "Q2 2025 Sales", "Q3 2025 Sales"].map((label) => (
+              <a
+                key={label}
+                href="#"
+                className="flex items-center justify-between rounded-2xl border border-border bg-card p-4 shadow-card transition-colors hover:bg-secondary"
+              >
+                <span className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1DBF73]/10">
+                    <i className="ri-google-drive-line text-lg text-[#1DBF73]" />
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">{label}</span>
+                </span>
+                <i className="ri-arrow-right-up-line text-muted-foreground" />
+              </a>
+            ))}
+          </div>
+        </section>
       </section>
     </Layout>
   );
