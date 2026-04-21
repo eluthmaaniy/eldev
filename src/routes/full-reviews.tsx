@@ -10,7 +10,7 @@ export const Route = createFileRoute("/full-reviews")({
       { title: `All ${ratingSummary.total} Reviews — Uthman Eldev (Digital)` },
       {
         name: "description",
-        content: `Read all ${ratingSummary.total} verified Shopify client reviews — 4.7★ average across every project.`,
+        content: `Read all ${ratingSummary.total} verified Shopify client reviews — ${ratingSummary.average}★ average across every project.`,
       },
       { property: "og:title", content: `All ${ratingSummary.total} Reviews — Uthman Eldev` },
       { property: "og:description", content: "Every verified review, in one place." },

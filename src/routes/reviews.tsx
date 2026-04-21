@@ -1,21 +1,31 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import { reviewsAll, ratingSummary, type Review } from "@/data/reviews-data";
+import {
+  reviewsAll,
+  ratingSummary,
+  formatRelativeDate,
+  formatExactDate,
+  type Review,
+} from "@/data/reviews-data";
 
 export const Route = createFileRoute("/reviews")({
   head: () => ({
     meta: [
-      { title: "Reviews (4.7 ★ · 239) — Uthman Eldev (Digital)" },
+      { title: "Reviews (4.8 ★ · 239) — Uthman Eldev (Digital)" },
       {
         name: "description",
-        content: "Verified Fiverr & Shopify Partner reviews for Uthman Eldev — 4.7★ across 239 reviews.",
+        content:
+          "Verified Shopify Partner reviews for Uthman Eldev — 4.8★ across 239 reviews.",
       },
       { property: "og:title", content: "Reviews — Uthman Eldev (Digital)" },
-      { property: "og:description", content: "239 verified reviews · 4.7★ average" },
+      { property: "og:description", content: "239 verified reviews · 4.8★ average" },
     ],
   }),
   component: ReviewsPage,
 });
+
+const STAR_GOLD = "#F5C452";
 
 export function Stars({ rating, size = "sm" }: { rating: number; size?: "sm" | "xs" }) {
   const cls = size === "xs" ? "text-xs" : "text-sm";
@@ -24,14 +34,31 @@ export function Stars({ rating, size = "sm" }: { rating: number; size?: "sm" | "
       {Array.from({ length: 5 }).map((_, i) => (
         <i
           key={i}
-          className={`ri-star-fill ${cls} ${i < rating ? "text-[#B8860B]" : "text-border"}`}
+          className={`ri-star-fill ${cls}`}
+          style={{ color: i < rating ? STAR_GOLD : "var(--color-border)" }}
         />
       ))}
     </div>
   );
 }
 
+/**
+ * Live-updating relative time. Re-renders every minute so "5 minutes ago"
+ * becomes "6 minutes ago" without a refresh.
+ */
+function useLiveDate(ts: number) {
+  const [label, setLabel] = useState<string>(() => formatExactDate(ts));
+  useEffect(() => {
+    const update = () => setLabel(`${formatRelativeDate(ts)} · ${formatExactDate(ts)}`);
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
+  }, [ts]);
+  return label;
+}
+
 export function ReviewCard({ r }: { r: Review }) {
+  const dateLabel = useLiveDate(r.timestamp);
   return (
     <article className="rounded-2xl border border-border bg-card p-5 shadow-card">
       <div className="flex items-start gap-3">
@@ -57,7 +84,7 @@ export function ReviewCard({ r }: { r: Review }) {
               <span aria-hidden>{r.countryFlag}</span> {r.country}
             </span>
             <span>·</span>
-            <span>{r.date}</span>
+            <span suppressHydrationWarning>{dateLabel}</span>
           </div>
           <div className="mt-2 grid gap-1 text-xs sm:grid-cols-2">
             <div className="flex items-center gap-2">
@@ -89,7 +116,8 @@ function RatingBar({ stars, count, total }: { stars: number; count: number; tota
         {Array.from({ length: 5 }).map((_, i) => (
           <i
             key={i}
-            className={`ri-star-fill text-xs ${i < stars ? "text-[#B8860B]" : "text-border"}`}
+            className="ri-star-fill text-xs"
+            style={{ color: i < stars ? STAR_GOLD : "var(--color-border)" }}
           />
         ))}
       </div>

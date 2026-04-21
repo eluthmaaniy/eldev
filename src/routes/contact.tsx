@@ -4,47 +4,56 @@ import { Layout } from "@/components/site/Layout";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Eldev Digital" },
+      { title: "Contact — Uthman Eldev (Digital)" },
       {
         name: "description",
         content:
-          "Get in touch with Eldev Digital — Shopify expert. Reach out via WhatsApp, email, or Fiverr. Average response under one hour.",
+          "Get in touch with Uthman Eldev — Shopify expert. Reach out via WhatsApp (UK or NG) or email contact@eldev.digital. Average response under one hour.",
       },
-      { property: "og:title", content: "Contact — Eldev Digital" },
-      { property: "og:description", content: "Reach out via WhatsApp, email, or Fiverr." },
+      { property: "og:title", content: "Contact — Uthman Eldev (Digital)" },
+      { property: "og:description", content: "WhatsApp UK/NG or email contact@eldev.digital." },
     ],
   }),
   component: ContactPage,
 });
 
+const PREFILL = encodeURIComponent("Hello, Eldev, I'm from your portfolio site");
+
 const channels = [
   {
-    label: "WhatsApp",
-    value: "Chat instantly",
+    label: "WhatsApp · Nigeria",
+    value: "+234 902 679 9223",
     icon: "ri-whatsapp-line",
-    href: "https://wa.me/2340000000000",
-    cta: "Open WhatsApp",
+    href: `https://wa.me/2349026799223?text=${PREFILL}`,
+    cta: "Chat on WhatsApp",
+  },
+  {
+    label: "WhatsApp · United Kingdom",
+    value: "+44 7951 525266",
+    icon: "ri-whatsapp-line",
+    href: `https://wa.me/447951525266?text=${PREFILL}`,
+    cta: "Chat on WhatsApp",
   },
   {
     label: "Email",
-    value: "hello@eldevdigital.com",
+    value: "contact@eldev.digital",
     icon: "ri-mail-line",
-    href: "mailto:hello@eldevdigital.com",
+    href: "mailto:contact@eldev.digital?subject=Project%20enquiry",
     cta: "Send email",
   },
   {
-    label: "Fiverr",
-    value: "View my profile",
-    icon: "ri-store-2-line",
-    href: "https://fiverr.com",
-    cta: "Open Fiverr",
+    label: "Website",
+    value: "eldev.digital",
+    icon: "ri-global-line",
+    href: "https://eldev.digital",
+    cta: "Open site",
   },
 ];
 
 function ContactPage() {
   return (
     <Layout>
-      <section className="mx-auto max-w-2xl px-6 pt-10 sm:pt-14">
+      <section className="mx-auto max-w-2xl px-6 pt-6 sm:pt-8">
         <header>
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Let's work together
@@ -67,18 +76,18 @@ function ContactPage() {
             <a
               key={c.label}
               href={c.href}
-              target="_blank"
+              target={c.href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
-              className="glass group flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-0.5"
+              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 shadow-card transition-transform hover:-translate-y-0.5"
             >
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#1DBF73]/10">
                 <i className={`${c.icon} text-2xl text-[#1DBF73]`} />
               </span>
-              <span className="flex-1">
+              <span className="min-w-0 flex-1">
                 <span className="block text-sm font-semibold text-foreground">{c.label}</span>
-                <span className="block text-sm text-muted-foreground">{c.value}</span>
+                <span className="block truncate text-sm text-muted-foreground">{c.value}</span>
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-foreground px-4 py-2 text-xs font-semibold text-white">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#222325] px-4 py-2 text-xs font-semibold text-white transition-colors group-hover:bg-[#1DBF73]">
                 {c.cta} <i className="ri-arrow-right-up-line" />
               </span>
             </a>
