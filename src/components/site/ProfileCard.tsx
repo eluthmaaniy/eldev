@@ -101,10 +101,6 @@ export function ProfileCard() {
 
           {/* 5. Partner + Rating + Plus badge */}
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="glass-pill inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] font-medium text-foreground">
-              <i className="ri-shield-check-fill text-[#1DBF73]" />
-              <span className="whitespace-nowrap">Shopify Partner · Since 2024</span>
-            </span>
             <Link
               to="/reviews"
               className="glass-pill inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] font-medium text-foreground hover:text-[#1DBF73]"
