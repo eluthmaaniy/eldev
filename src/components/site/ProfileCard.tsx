@@ -28,7 +28,6 @@ function useClock(timeZone: string) {
 
 export function ProfileCard() {
   const ngTime = useClock("Africa/Lagos");
-  const ukTime = useClock("Europe/London");
 
   return (
     <header className="w-full">
@@ -121,17 +120,17 @@ export function ProfileCard() {
               <span>Abuja, Nigeria</span>
             </span>
             <a
-              href="https://wa.me/447951525266"
+              href="https://wa.me/2349026799223"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#1DBF73]"
             >
               <i className="ri-phone-fill" />
-              <span>+44 7951 525266</span>
+              <span>+234 902 679 9223</span>
             </a>
           </div>
 
-          {/* 5. Status row — NG + UK times (Online moved to row 2 on mobile) */}
+          {/* 5. Status row — NG time (Online moved to row 2 on mobile) */}
           <div className="no-scrollbar mt-3 flex w-full max-w-full items-center justify-center gap-1.5 overflow-x-auto whitespace-nowrap px-1">
             <span className="hidden shrink-0 items-center gap-1.5 rounded-full bg-[#1DBF73]/12 px-3 py-1.5 text-[12px] font-medium text-[#1DBF73] sm:inline-flex">
               <span className="pulse-dot inline-block h-2 w-2 rounded-full bg-[#1DBF73]" />
@@ -143,13 +142,6 @@ export function ProfileCard() {
             >
               <i className="ri-time-line text-[#1DBF73]" />
               NG{ngTime ? ` · ${ngTime}` : ""}
-            </span>
-            <span
-              className="glass-pill inline-flex shrink-0 items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-foreground/80"
-              suppressHydrationWarning
-            >
-              <i className="ri-time-line text-[#1DBF73]" />
-              UK{ukTime ? ` · ${ukTime}` : ""}
             </span>
           </div>
 

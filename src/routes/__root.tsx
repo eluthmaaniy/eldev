@@ -38,7 +38,7 @@ export const Route = createRootRoute({
       {
         name: "keywords",
         content:
-          "Shopify expert, top rated Shopify expert, Shopify developer, Shopify Partner, hire Shopify expert, Shopify store design, Shopify redesign, Shopify theme customization, Shopify Plus partner, Shopify SEO, Shopify dropshipping expert, dropshipping setup, Klaviyo email marketing, Shopify Liquid developer, ecommerce developer, Shopify expert Nigeria, Shopify expert UK, Shopify expert Abuja, Shopify freelancer, Eldev Digital, Uthman Eldev",
+          "Shopify expert, top rated Shopify expert, Shopify developer, Shopify Partner, hire Shopify expert, Shopify store design, Shopify redesign, Shopify theme customization, Shopify Plus partner, Shopify SEO, Shopify dropshipping expert, dropshipping setup, Klaviyo email marketing, Shopify Liquid developer, ecommerce developer, Shopify expert Nigeria, Shopify expert Abuja, Shopify freelancer, Eldev Digital, Uthman Eldev",
       },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
       { name: "googlebot", content: "index, follow" },
