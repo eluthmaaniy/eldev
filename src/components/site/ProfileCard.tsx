@@ -68,8 +68,25 @@ export function ProfileCard() {
             />
           </h1>
 
-          {/* 2. Online pill + local time */}
-          <div className="mt-3 flex items-center justify-center gap-2.5">
+          {/* 2. Tagline */}
+          <p className="mt-2 text-[14px] font-normal tracking-[-0.01em] text-foreground">
+            I'll bring your ideas to life.
+          </p>
+
+          {/* 3. Location + Language — plain inline */}
+          <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[13px] text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <i className="ri-map-pin-2-fill text-[#1DBF73]" />
+              <span>Nigeria</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <i className="ri-global-line text-[#1DBF73]" />
+              <span>English</span>
+            </span>
+          </div>
+
+          {/* 4. Online pill + local time */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73]/12 px-3 py-1.5 text-[12px] font-medium text-[#1DBF73]">
               <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-[#1DBF73]" />
               Online
@@ -82,12 +99,7 @@ export function ProfileCard() {
             </span>
           </div>
 
-          {/* 3. Tagline */}
-          <p className="mt-3 text-[14px] font-normal tracking-[-0.01em] text-foreground">
-            I'll bring your ideas to life.
-          </p>
-
-          {/* 4. Partner + Rating + Plus badge */}
+          {/* 5. Partner + Rating + Plus badge */}
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <span className="glass-pill inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] font-medium text-foreground">
               <i className="ri-shield-check-fill text-[#1DBF73]" />
@@ -107,18 +119,6 @@ export function ProfileCard() {
               className="h-7 w-auto sm:h-8"
               loading="eager"
             />
-          </div>
-
-          {/* 5. Location + Language — plain inline */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[13px] text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-              <i className="ri-map-pin-2-fill text-[#1DBF73]" />
-              <span>Nigeria</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-              <i className="ri-global-line text-[#1DBF73]" />
-              <span>English</span>
-            </span>
           </div>
         </div>
 
