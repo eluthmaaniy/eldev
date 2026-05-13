@@ -119,15 +119,6 @@ export function ProfileCard() {
               <i className="ri-map-pin-2-fill text-[#1DBF73]" />
               <span>Abuja, Nigeria</span>
             </span>
-            <a
-              href="https://wa.me/2349026799223"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#1DBF73]"
-            >
-              <i className="ri-phone-fill" />
-              <span>+234 902 679 9223</span>
-            </a>
           </div>
 
           {/* 5. Status row — NG time (Online moved to row 2 on mobile) */}
@@ -145,13 +136,10 @@ export function ProfileCard() {
             </span>
           </div>
 
-          {/* 6. Languages — English + Arabic */}
+          {/* 6. Languages — English */}
           <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
             <span className="glass-pill inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-foreground/70">
               <i className="ri-global-line text-[#1DBF73]" /> English
-            </span>
-            <span className="glass-pill inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-foreground/70">
-              <i className="ri-global-line text-[#1DBF73]" /> Arabic
             </span>
           </div>
         </div>
