@@ -74,7 +74,7 @@ function ContactPage() {
 
           <div className="mt-6 flex flex-col gap-2.5">
             <a
-              href={WHATSAPP_UK}
+              href={WHATSAPP_NG}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1DBF73] px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.01]"
