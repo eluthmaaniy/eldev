@@ -9,10 +9,10 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Get in touch with Uthman Eldev — Shopify expert. Reach out via WhatsApp (UK or NG) or email contact@eldev.digital. Average response under one hour.",
+          "Get in touch with Uthman Eldev — Shopify expert. Reach out via WhatsApp or email contact@eldev.digital. Average response under one hour.",
       },
       { property: "og:title", content: "Contact — Uthman Eldev (Digital)" },
-      { property: "og:description", content: "WhatsApp UK/NG or email contact@eldev.digital." },
+      { property: "og:description", content: "WhatsApp or email contact@eldev.digital." },
     ],
     links: [{ rel: "canonical", href: "https://eldev.digital/contact" }],
   }),
@@ -21,16 +21,10 @@ export const Route = createFileRoute("/contact")({
 
 const PREFILL = encodeURIComponent("Hello, Eldev, I'm from your portfolio site");
 
-const WHATSAPP_UK = `https://wa.me/447951525266?text=${PREFILL}`;
+const WHATSAPP_NG = `https://wa.me/2349026799223?text=${PREFILL}`;
 const EMAIL_HREF = "mailto:contact@eldev.digital?subject=Project%20enquiry";
 
 const quietChannels = [
-  {
-    label: "WhatsApp · Nigeria",
-    value: "+234 902 679 9223",
-    icon: "ri-whatsapp-line",
-    href: `https://wa.me/2349026799223?text=${PREFILL}`,
-  },
   {
     label: "Website",
     value: "eldev.digital",
