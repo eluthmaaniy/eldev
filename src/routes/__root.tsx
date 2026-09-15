@@ -69,7 +69,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap",
       },
       {
         rel: "stylesheet",
@@ -88,12 +88,13 @@ export const Route = createRootRoute({
               name: "Uthman Eldev",
               alternateName: ["Eldev Digital", "Uthman Eldev (Digital)"],
               url: "https://eldev.digital/",
-              image: "https://eldev.digital/favicon.jpg",
+              image:
+                "https://res.cloudinary.com/dib5bkbsy/image/upload/v1789466810/file_00000000173882469900203e035f2859_qacuak.png",
               jobTitle: "Top Rated Shopify Expert & Shopify Partner",
               description:
                 "Top Rated Shopify Expert and verified Shopify Partner specializing in store design, redesign, dropshipping setup, Shopify SEO, and Klaviyo email marketing.",
               email: "mailto:contact@eldev.digital",
-              telephone: "+44 7951 525266",
+              telephone: "+2348105657460",
               knowsLanguage: ["English", "Arabic"],
               address: {
                 "@type": "PostalAddress",

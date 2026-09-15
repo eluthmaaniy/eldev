@@ -30,31 +30,25 @@ function FullPortfolio() {
 
   return (
     <Layout>
-      <section className="mx-auto max-w-3xl px-6 pt-6 sm:pt-8">
-        <Link
-          to="/portfolio"
-          className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
-        >
-          <i className="ri-arrow-left-line" /> Back to Portfolio
+      <section className="mx-auto max-w-3xl px-6 pt-10 sm:pt-12">
+        <Link to="/portfolio" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <i className="ri-arrow-left-s-line" aria-hidden />
+          Work
         </Link>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          Full Portfolio
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          All {projects.length} Shopify projects, in one place.
-        </p>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">All work</h1>
+        <p className="mt-2 text-muted-foreground">All {projects.length} Shopify projects, in one place.</p>
 
-        {/* Filter pills */}
         <div className="mt-6 -mx-6 overflow-x-auto no-scrollbar">
-          <div className="flex gap-2 px-6">
+          <div className="flex gap-4 px-6">
             {filters.map((c) => (
               <button
                 key={c}
+                type="button"
                 onClick={() => setFilter(c)}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap pb-1 text-sm ${
                   filter === c
-                    ? "bg-[#222325] text-white hover:bg-[#1DBF73]"
-                    : "bg-secondary text-foreground/70 hover:bg-accent"
+                    ? "border-b border-foreground font-medium text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {c}
@@ -63,29 +57,15 @@ function FullPortfolio() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-4">
+        <div className="mb-4 mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((p) => (
-            <article
-              key={p.title + p.img}
-              className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-transform hover:-translate-y-0.5"
-            >
-              <div className="aspect-[4/3] overflow-hidden bg-secondary">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+            <article key={p.title + p.img}>
+              <div className="aspect-[4/3] overflow-hidden rounded-xl bg-secondary">
+                <img src={p.img} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
               </div>
-              <div className="p-4">
-                <span className="inline-block rounded-full bg-[#1DBF73]/10 px-2.5 py-1 text-[11px] font-medium text-[#1DBF73]">
-                  {p.category}
-                </span>
-                <h3 className="mt-2 font-semibold text-foreground">{p.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Ordered by <span className="font-medium text-foreground">{p.client}</span>
-                </p>
+              <div className="mt-2.5">
+                <h3 className="text-[15px] font-medium text-foreground">{p.title}</h3>
+                <p className="mt-0.5 text-[12px] text-muted-foreground">{p.category}</p>
               </div>
             </article>
           ))}

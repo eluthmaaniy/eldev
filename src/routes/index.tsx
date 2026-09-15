@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import coverImg from "@/assets/eldev-cover.png";
+import { ProfileCard } from "@/components/site/ProfileCard";
+import { PartnerLogos } from "@/components/site/PartnerLogos";
+import { projects } from "@/data/portfolio-projects";
+import { reviewsAll, ratingSummary } from "@/data/reviews-data";
+import { Stars } from "@/components/site/Stars";
+import { COVER_URL, WHATSAPP_URL } from "@/lib/contact";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -15,258 +20,219 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Uthman Eldev (Digital) — Top Rated Shopify Expert" },
       {
         property: "og:description",
-        content: "Top Rated Shopify Expert & Partner — store design, redesign, dropshipping, Shopify SEO, Klaviyo. 4.8★ · 239 reviews.",
+        content:
+          "Top Rated Shopify Expert & Partner — store design, redesign, dropshipping, Shopify SEO, Klaviyo. 4.8★ · 239 reviews.",
       },
-      { property: "og:image", content: coverImg },
-      { name: "twitter:image", content: coverImg },
+      { property: "og:image", content: COVER_URL },
+      { name: "twitter:image", content: COVER_URL },
     ],
     links: [{ rel: "canonical", href: "https://eldev.digital/" }],
   }),
   component: AboutPage,
 });
 
-const WHATSAPP_URL =
-  "https://wa.me/2349026799223?text=" +
-  encodeURIComponent("Hello, Eldev, I'm from your portfolio site");
-
-// Skills — Shopify / e-commerce only. No Etsy, no headless commerce,
-// no tautologies (each skill appears once and reads distinctly).
-const SKILLS_GRID: { name: string; icon: string }[] = [
-  { name: "Shopify Store Setup", icon: "ri-store-2-line" },
-  { name: "Shopify Store Redesign", icon: "ri-palette-line" },
-  { name: "Theme Customization", icon: "ri-brush-line" },
-  { name: "Store Migration", icon: "ri-exchange-line" },
-  { name: "Product & Collection Setup", icon: "ri-stack-line" },
-  { name: "Store Settings Configuration", icon: "ri-settings-3-line" },
-  { name: "POS Setup & Migration", icon: "ri-computer-line" },
-  { name: "Website Audit & Optimization", icon: "ri-search-eye-line" },
-  { name: "Ongoing Store Management", icon: "ri-tools-line" },
-  { name: "Checkout Upgrade", icon: "ri-shopping-cart-2-line" },
-  { name: "Conversion Rate Optimization", icon: "ri-line-chart-line" },
-  { name: "Site Performance & Speed", icon: "ri-flashlight-line" },
-  { name: "Shopify SEO", icon: "ri-search-line" },
-  { name: "Dropshipping Setup", icon: "ri-truck-line" },
-  { name: "Product Research", icon: "ri-bar-chart-box-line" },
-  { name: "Product Listing Optimization", icon: "ri-price-tag-3-line" },
-  { name: "Klaviyo Email Flows", icon: "ri-mail-send-line" },
-  { name: "Email Marketing", icon: "ri-mail-star-line" },
-  { name: "Facebook & Instagram Ads", icon: "ri-facebook-circle-line" },
-  { name: "TikTok Ads", icon: "ri-tiktok-line" },
-  { name: "Google Ads & Merchant Center", icon: "ri-google-line" },
-];
-
-const education = [
+const SKILL_GROUPS: { title: string; icon: string; items: string[] }[] = [
   {
-    icon: "ri-school-line",
-    school: "University of Abuja",
-    course: "B.A. English",
-    grad: "Graduated 2025",
+    title: "Stores",
+    icon: "ri-store-2-line",
+    items: [
+      "Shopify Store Setup",
+      "Shopify Store Redesign",
+      "Theme Customization",
+      "Store Migration",
+      "Product & Collection Setup",
+      "Store Settings Configuration",
+      "POS Setup & Migration",
+      "Ongoing Store Management",
+    ],
+  },
+  {
+    title: "Growth",
+    icon: "ri-line-chart-line",
+    items: [
+      "Website Audit & Optimization",
+      "Checkout Upgrade",
+      "Conversion Rate Optimization",
+      "Site Performance & Speed",
+      "Shopify SEO",
+    ],
+  },
+  {
+    title: "Selling",
+    icon: "ri-shopping-bag-3-line",
+    items: ["Dropshipping Setup", "Product Research", "Product Listing Optimization"],
+  },
+  {
+    title: "Marketing",
+    icon: "ri-megaphone-line",
+    items: [
+      "Klaviyo Email Flows",
+      "Email Marketing",
+      "Facebook & Instagram Ads",
+      "TikTok Ads",
+      "Google Ads & Merchant Center",
+    ],
   },
 ];
+
+const PREVIEW_PER_GROUP = 3;
+
+const education = {
+  school: "University of Abuja",
+  course: "B.A. English",
+  grad: "Graduated 2025",
+};
 
 const certifications = [
-  {
-    title: "Shopify Website & Development",
-    org: "Udemy",
-    year: "2019",
-  },
-  {
-    title: "Facebook Marketing & Advertising",
-    org: "SkillUp",
-    year: "2024",
-  },
-  {
-    title: "Shopify Theme Development & Liquid",
-    org: "Shopify Partner Academy",
-    year: "2023",
-  },
-  {
-    title: "Google Ads Search Certification",
-    org: "Google Skillshop",
-    year: "2024",
-  },
-  {
-    title: "Klaviyo Email Marketing Certification",
-    org: "Klaviyo Academy",
-    year: "2024",
-  },
+  { title: "Shopify Website & Development", org: "Udemy", year: "2019" },
+  { title: "Facebook Marketing & Advertising", org: "SkillUp", year: "2024" },
+  { title: "Shopify Theme Development & Liquid", org: "Shopify Partner Academy", year: "2023" },
+  { title: "Google Ads Search Certification", org: "Google Skillshop", year: "2024" },
+  { title: "Klaviyo Email Marketing Certification", org: "Klaviyo Academy", year: "2024" },
 ];
 
-const SHORT_BIO =
-  "Hi, I'm Uthman Eldev, aka Eldev Digital, a Shopify Partner expert with years of experience helping store owners achieve massive success. Whether you need a store redesign, or want to turn your Shopify store into a profitable asset, I'm here to help!";
-
-const FULL_BIO_REST = `Why am I different?
-
-When you work with me, you're not just getting a service, you're getting someone who is invested in your growth. I'd work on strategies that reflect your store's unique essence, bringing in more visitors, more conversions, and more profits. Your success is my priority!`;
-
-const SKILLS_PREVIEW_COUNT = 8;
+const featuredStores = projects.slice(0, 3);
+const featuredReviews = reviewsAll
+  .slice()
+  .sort((a, b) => Number(b.repeat ?? 0) - Number(a.repeat ?? 0) || b.rating - a.rating)
+  .filter((r) => r.rating === 5)
+  .slice(0, 3);
 
 function AboutPage() {
-  const [bioOpen, setBioOpen] = useState(false);
   const [skillsOpen, setSkillsOpen] = useState(false);
-  const visibleSkills = skillsOpen ? SKILLS_GRID : SKILLS_GRID.slice(0, SKILLS_PREVIEW_COUNT);
-  const hiddenCount = SKILLS_GRID.length - SKILLS_PREVIEW_COUNT;
 
   return (
     <Layout>
-      <section className="mx-auto max-w-2xl px-6 pt-6 sm:pt-8">
-        {/* About me */}
-        <div className="rounded-3xl border border-border bg-card p-6 shadow-card">
-          <h2 className="text-lg font-semibold tracking-tight text-foreground">About me</h2>
-          <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-foreground/80">
-            {SHORT_BIO}
-            {bioOpen && "\n\n" + FULL_BIO_REST}
+      <ProfileCard />
+
+      <div className="mx-auto max-w-2xl px-6">
+        <p className="font-personal whitespace-pre-line text-[16px] leading-relaxed text-foreground/80">
+          Hi, I'm Uthman — I help Shopify and e-commerce store owners turn a store that isn't converting into one that looks right, loads fast, and actually sells.
+          {"\n\n"}
+          When you work with me, you're not buying a generic package. I'll work on the store in front of us — redesign, theme work, dropshipping setup, SEO, Klaviyo — whatever it takes to bring in more visitors, more conversions, and more profit. Your success is the brief.
+        </p>
+
+        <section className="mt-12">
+          <h2 className="text-lg font-semibold tracking-tight text-foreground">
+            <i className="ri-tools-line mr-1.5 text-base text-muted-foreground" aria-hidden />
+            What I do
+          </h2>
+          <div className="mt-5 grid gap-8 sm:grid-cols-2">
+            {SKILL_GROUPS.map((group) => {
+              const items = skillsOpen ? group.items : group.items.slice(0, PREVIEW_PER_GROUP);
+              return (
+                <div key={group.title}>
+                  <h3 className="inline-flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <i className={`${group.icon} text-base`} aria-hidden />
+                    {group.title}
+                  </h3>
+                  <ul className="mt-2 space-y-1.5 text-[15px] text-foreground/80">
+                    {items.map((name) => (
+                      <li key={name}>{name}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => setSkillsOpen((v) => !v)}
+            className="mt-5 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          >
+            {skillsOpen ? "Show less" : "Show all"}
+          </button>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-lg font-semibold tracking-tight text-foreground">
+            <i className="ri-graduation-cap-line mr-1.5 text-base text-muted-foreground" aria-hidden />
+            Background
+          </h2>
+          <p className="font-personal mt-3 text-[15px] text-foreground/80">
+            <i className="ri-school-line mr-1 text-muted-foreground" aria-hidden />
+            {education.course}, {education.school} · {education.grad}
           </p>
-
-          <div className="mt-3 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setBioOpen((v) => !v)}
-              className="text-sm font-semibold text-[#1DBF73] hover:underline"
-            >
-              {bioOpen ? "Show less" : "Read more"}
-            </button>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#1DBF73] px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:scale-[1.02]"
-            >
-              <i className="ri-whatsapp-line text-base" />
-              Contact Me
-            </a>
-          </div>
-        </div>
-
-        {/* Skills */}
-        <section className="mt-10">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Skills</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {visibleSkills.map((s) => (
-              <span key={s.name} className="skill-chip">
-                {s.name}
-              </span>
-            ))}
-          </div>
-          <div className="mt-3 flex justify-center">
-            {!skillsOpen && hiddenCount > 0 && (
-              <button
-                type="button"
-                onClick={() => setSkillsOpen(true)}
-                className="rounded-full bg-[#222325] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
-              >
-                Show {hiddenCount} more
-              </button>
-            )}
-            {skillsOpen && (
-              <button
-                type="button"
-                onClick={() => setSkillsOpen(false)}
-                className="rounded-full bg-[#222325] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
-              >
-                Show less
-              </button>
-            )}
-          </div>
+          <ul className="mt-4 space-y-2 text-[14px] text-muted-foreground">
+            {[...certifications]
+              .sort((a, b) => Number(b.year) - Number(a.year))
+              .map((c) => (
+                <li key={c.title} className="flex items-start gap-2">
+                  <i className="ri-award-line mt-0.5 text-base" aria-hidden />
+                  <span>
+                    <span className="text-foreground/80">{c.title}</span>
+                    <span>
+                      {" "}
+                      · {c.org}, {c.year}
+                    </span>
+                  </span>
+                </li>
+              ))}
+          </ul>
         </section>
 
-        {/* Education */}
-        <section className="mt-10">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Education</h2>
-          <div className="mt-4 rounded-2xl border border-border bg-card p-5 shadow-card">
-            {education.map((e) => (
-              <div key={e.school} className="flex items-start gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary">
-                  <i className={`${e.icon} text-xl text-foreground/70`} />
+        <section className="mt-12">
+          <div className="flex items-baseline justify-between gap-4">
+            <h2 className="text-lg font-semibold tracking-tight text-foreground">A few stores</h2>
+            <Link to="/portfolio" className="inline-flex items-center gap-0.5 text-sm text-muted-foreground hover:text-foreground">
+              All work <i className="ri-arrow-right-s-line" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-6 sm:grid-cols-3">
+            {featuredStores.map((p) => (
+              <article key={p.title + p.img}>
+                <div className="aspect-[4/3] overflow-hidden rounded-xl bg-secondary">
+                  <img src={p.img} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
                 </div>
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 text-foreground">
-                    <i className="ri-building-line text-base text-muted-foreground" />
-                    <span className="font-semibold">{e.school}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <i className="ri-book-open-line text-base" />
-                    <span>{e.course}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <i className="ri-graduation-cap-line text-base" />
-                    <span>{e.grad}</span>
-                  </div>
-                </div>
-              </div>
+                <h3 className="mt-2.5 truncate text-[14px] font-medium text-foreground">{p.title}</h3>
+                <p className="truncate text-[12px] text-muted-foreground">{p.category}</p>
+              </article>
             ))}
           </div>
         </section>
 
-        {/* Certifications */}
-        <section className="mt-10">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Certifications</h2>
-          <div className="relative mt-6 pl-6">
-            <span className="absolute left-[5px] top-2 bottom-2 w-px bg-border" aria-hidden="true" />
-            <ul className="space-y-6">
-              {[...certifications]
-                .sort((a, b) => Number(b.year) - Number(a.year))
-                .map((c) => (
-                  <li key={c.title} className="relative">
-                    <span className="absolute -left-[26px] top-1 h-3 w-3 rounded-full bg-[#1DBF73] ring-4 ring-background" aria-hidden="true" />
-                    <div className="font-semibold text-foreground">{c.title}</div>
-                    <div className="mt-0.5 text-sm text-muted-foreground">
-                      {c.org} · {c.year}
-                    </div>
-                  </li>
-                ))}
-            </ul>
+        <section className="mt-12">
+          <div className="flex items-baseline justify-between gap-4">
+            <h2 className="text-lg font-semibold tracking-tight text-foreground">What clients say</h2>
+            <Link to="/reviews" className="inline-flex items-center gap-0.5 text-sm text-muted-foreground hover:text-foreground">
+              All {ratingSummary.total} <i className="ri-arrow-right-s-line" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-5 space-y-6">
+            {featuredReviews.map((r, i) => (
+              <blockquote key={r.name + i}>
+                <Stars rating={r.rating} size="xs" />
+                <p className="font-personal mt-2 text-[15px] leading-relaxed text-foreground/80">“{r.text}”</p>
+                <footer className="mt-2 text-[13px] text-muted-foreground">
+                  {r.name}
+                  {r.repeat ? " · Repeat client" : ""}
+                </footer>
+              </blockquote>
+            ))}
           </div>
         </section>
 
-        {/* Contact CTA */}
-        <section className="mt-10 mb-4 rounded-3xl border border-border bg-secondary p-6 text-center">
+        <section className="mt-14">
+          <PartnerLogos />
+        </section>
+
+        <section className="mt-14 mb-4 text-center">
+          <p className="font-personal text-[15px] text-muted-foreground">Have a Shopify store that needs work?</p>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#222325] px-7 py-3.5 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-[#1DBF73]"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#1DBF73] px-6 py-3 text-sm font-semibold text-white"
           >
-            <i className="ri-whatsapp-line text-base" />
-            Contact Me
+            <i className="ri-whatsapp-line text-base" aria-hidden />
+            Message me on WhatsApp
           </a>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1DBF73]/10 px-3 py-1 text-xs font-medium text-[#1DBF73]">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DBF73] opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DBF73]" />
-              </span>
-              <LiveOnline />
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-foreground/70 border border-border">
-              <i className="ri-time-line text-sm" /> Avg. response under 1 hour
-            </span>
-          </div>
+          <p className="mt-3 inline-flex items-center gap-1 text-[12px] text-muted-foreground">
+            <i className="ri-time-line" aria-hidden />
+            Usually replies in under an hour
+          </p>
         </section>
-      </section>
+      </div>
     </Layout>
   );
-}
-
-function LiveOnline() {
-  const [time, setTime] = useState<string>("");
-  useEffect(() => {
-    const updateTime = () => {
-      setTime(
-        new Date().toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        })
-      );
-    };
-
-    updateTime();
-    const id = setInterval(
-      updateTime,
-      1000 * 30
-    );
-    return () => clearInterval(id);
-  }, []);
-  return <span suppressHydrationWarning>Online{time ? ` · ${time}` : ""}</span>;
 }

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
 import { reviewsAll, ratingSummary } from "@/data/reviews-data";
-import { ReviewCard, Stars } from "./reviews";
+import { ReviewCard } from "./reviews";
+import { Stars } from "@/components/site/Stars";
 
 export const Route = createFileRoute("/full-reviews")({
   head: () => ({
@@ -35,42 +36,40 @@ function FullReviews() {
 
   return (
     <Layout>
-      <section className="mx-auto max-w-3xl px-6 pt-6 sm:pt-8">
-        <Link
-          to="/reviews"
-          className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
-        >
-          <i className="ri-arrow-left-line" /> Back to Reviews
+      <section className="mx-auto max-w-2xl px-6 pt-10 sm:pt-12">
+        <Link to="/reviews" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <i className="ri-arrow-left-s-line" aria-hidden />
+          Reviews
         </Link>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          All Reviews
-        </h1>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">All reviews</h1>
         <div className="mt-2 flex items-center gap-2 text-muted-foreground">
           <Stars rating={5} />
-          <span className="font-semibold text-foreground">{ratingSummary.average}</span>
+          <span className="font-medium text-foreground">{ratingSummary.average}</span>
           <span>({ratingSummary.total})</span>
         </div>
 
-        {/* Filter pills */}
         <div className="mt-6 -mx-6 overflow-x-auto no-scrollbar">
-          <div className="flex gap-2 px-6">
-            {([
-              ["all", "All reviews"],
-              ["5", "5 stars"],
-              ["4", "4 stars"],
-              ["3", "3 stars"],
-              ["repeat", "Repeat clients"],
-            ] as const).map(([k, label]) => (
+          <div className="flex gap-4 px-6">
+            {(
+              [
+                ["all", "All"],
+                ["5", "5 stars"],
+                ["4", "4 stars"],
+                ["3", "3 stars"],
+                ["repeat", "Repeat"],
+              ] as const
+            ).map(([k, label]) => (
               <button
                 key={k}
+                type="button"
                 onClick={() => {
                   setFilter(k);
                   setCount(PAGE_SIZE);
                 }}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap pb-1 text-sm ${
                   filter === k
-                    ? "bg-[#222325] text-white hover:bg-[#1DBF73]"
-                    : "bg-secondary text-foreground/70 hover:bg-accent"
+                    ? "border-b border-foreground font-medium text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {label}
@@ -79,26 +78,25 @@ function FullReviews() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className="mt-8 space-y-8">
           {visible.map((r, i) => (
             <ReviewCard key={r.name + i} r={r} />
           ))}
         </div>
 
         {count < filtered.length && (
-          <div className="mt-8 mb-4 flex justify-center">
+          <div className="mt-10 mb-4">
             <button
+              type="button"
               onClick={() => setCount((c) => c + PAGE_SIZE)}
-              className="inline-flex items-center gap-2 rounded-full bg-[#222325] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1DBF73]"
+              className="text-sm font-medium text-foreground underline-offset-4 hover:underline"
             >
-              Load more reviews <i className="ri-arrow-down-line" />
+              Load more
             </button>
           </div>
         )}
         {count >= filtered.length && (
-          <p className="mt-8 mb-4 text-center text-sm text-muted-foreground">
-            You've reached the end · {filtered.length} reviews shown
-          </p>
+          <p className="mt-10 mb-4 text-sm text-muted-foreground">{filtered.length} reviews shown</p>
         )}
       </section>
     </Layout>
